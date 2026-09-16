@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinal TechForge · Reconstrucción profesional de LibraryApp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Rubik:wght@400;500;600;700&family=Material+Symbols+Outlined:FILL@0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-highest":"#d9e2ff",
+            "secondary-container":"#fe801d",
+            "inverse-on-surface":"#edf0ff",
+            "primary-fixed-dim":"#b4c5ff",
+            "code-canvas":"#0F172A",
+            "error-container":"#ffdad6",
+            "success-emerald":"#15803D",
+            "on-primary-container":"#8fa2df",
+            "on-background":"#0d1b36",
+            "secondary-fixed":"#ffdbc8",
+            "surface-container-lowest":"#ffffff",
+            "primary":"#082056",
+            "on-error":"#ffffff",
+            "border-subtle":"#D8E2EC",
+            "on-tertiary":"#ffffff",
+            "tertiary-fixed-dim":"#ffba29",
+            "inverse-primary":"#b4c5ff",
+            "on-error-container":"#93000a",
+            "outline":"#757681",
+            "surface-container":"#e9edff",
+            "on-tertiary-fixed-variant":"#5f4100",
+            "surface-dim":"#cdd9fe",
+            "secondary":"#994700",
+            "on-primary-fixed-variant":"#31447b",
+            "surface-subtle":"#EEF2F6",
+            "surface-variant":"#d9e2ff",
+            "on-surface-variant":"#44464f",
+            "on-secondary":"#ffffff",
+            "on-secondary-fixed":"#321300",
+            "on-primary-fixed":"#00174b",
+            "surface-bright":"#faf8ff",
+            "on-tertiary-container":"#d69800",
+            "inverse-surface":"#23304c",
+            "surface-tint":"#495c94",
+            "error":"#ba1a1a",
+            "primary-fixed":"#dbe1ff",
+            "on-secondary-fixed-variant":"#743500",
+            "on-tertiary-fixed":"#271900",
+            "primary-container":"#23376d",
+            "secondary-fixed-dim":"#ffb68a",
+            "surface-container-low":"#f1f3ff",
+            "tertiary":"#322100",
+            "surface-container-high":"#e1e8ff",
+            "on-primary":"#ffffff",
+            "surface-canvas":"#F8FAFC",
+            "tertiary-fixed":"#ffdea9",
+            "outline-variant":"#c5c6d1",
+            "surface":"#faf8ff",
+            "background":"#faf8ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            gutter: "1.5rem",
+            "gutter-mobile": "1rem",
+            margin: "2rem",
+            "margin-mobile": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          fontFamily: {
+            rubik: ["Rubik"],
+            mono: ["JetBrains Mono"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: Rubik, sans-serif; }
+    code, pre, .mono { font-family: "JetBrains Mono", monospace; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #eef2f6; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #c5c6d1; border-radius: 999px; }
+    .package-checklist { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.5rem; margin-top:.75rem; }
+    .package-checklist label { display:flex; align-items:flex-start; gap:.5rem; padding:.55rem .65rem; background:#fff; border:1px solid #D8E2EC; border-radius:.5rem; font-size:.75rem; line-height:1.25rem; }
+    .package-checklist input { margin-top:.15rem; flex:0 0 auto; }
+    .git-mini { margin-top:1rem; padding:1rem; background:#0F172A; color:#edf0ff; border-radius:.75rem; }
+    .git-mini h4 { color:#ffb68a; font-family:'JetBrains Mono',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.5rem; }
+    .step-card { transition: border-color .15s ease, transform .15s ease; }
+    .step-card:hover { border-color: #23376d; transform: translateY(-1px); }
+    @media (max-width: 1279px) {
+      .desktop-dock { display:none!important; }
+      .main-shell { max-width:none!important; }
+    }
+    @media (max-width: 1023px) {
+      aside.left-nav { display:none; }
+      .main-grid { display:block!important; }
+    }
+  </style>
+</head>
+
+<body class="bg-surface-canvas text-on-surface min-h-screen flex flex-col antialiased selection:bg-secondary-container selection:text-on-primary">
+
+  <!-- TOP APP BAR -->
+  <header class="bg-surface border-b border-border-subtle shadow-sm flex justify-between items-center w-full px-gutter h-16 sticky top-0 z-50">
+    <div class="flex items-center gap-space-md">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-surface-container-lowest shadow-sm">
+        <span class="material-symbols-outlined text-secondary-container">terminal</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-2xl font-bold text-primary tracking-tight leading-none">Kinal TechForge</span>
+        <span class="mono text-[11px] text-outline mt-1">Programación 1 · Taller de reconstrucción</span>
+      </div>
+      <div class="h-6 w-px bg-border-subtle mx-1 hidden lg:block"></div>
+      <div class="hidden lg:flex items-center gap-2">
+        <span class="mono text-xs bg-surface-subtle text-primary px-2 py-1 rounded-full border border-border-subtle">20 HORAS</span>
+        <span class="text-sm text-on-surface-variant">LibraryApp · JavaFX + MVC + DAO</span>
+      </div>
+    </div>
+
+    <nav class="hidden xl:flex items-center gap-6">
+      <a href="#inicio" class="text-primary font-medium border-b-2 border-secondary-container pb-1">Inicio</a>
+      <a href="#diagnostico" class="text-on-surface-variant hover:text-primary pb-1">Diagnóstico</a>
+      <a href="#config-librerias" class="text-on-surface-variant hover:text-primary pb-1">Librerías</a>
+      <a href="#gitflow" class="text-on-surface-variant hover:text-primary pb-1">Git Flow</a>
+      <a href="#archivos-md" class="text-on-surface-variant hover:text-primary pb-1">Documentos .md</a>
+      <a href="#ruta" class="text-on-surface-variant hover:text-primary pb-1">Ruta</a>
+      <a href="#rubrica" class="text-on-surface-variant hover:text-primary pb-1">Rúbrica</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="#checklist" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-subtle text-primary border border-border-subtle mono text-xs">
+        <span class="material-symbols-outlined text-[17px]">checklist</span> Checklist
+      </a>
+      <a href="#entrega" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-secondary-container text-surface-container-lowest font-medium shadow-sm hover:brightness-105">
+        <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+        <span>Entrega</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="flex-1 flex min-h-0">
+
+    <!-- LEFT NAV -->
+    <aside class="left-nav w-72 flex-shrink-0 bg-surface border-r border-border-subtle flex flex-col justify-between sticky top-16 h-[calc(100vh-4rem)]">
+      <div class="p-space-md overflow-y-auto scrollbar-thin">
+        <div class="flex items-start gap-space-sm pb-space-md border-b border-border-subtle mb-space-md">
+          <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">school</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-primary leading-tight">Guía del estudiante</h2>
+            <p class="mono text-[11px] text-outline mt-1">Reconstrucción profesional</p>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="mono text-[11px] text-outline px-2 mb-1 uppercase tracking-wider">Etapas</div>
+          <a href="#diagnostico" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center mono text-xs">01</span>
+            <span class="mono text-xs">Diagnóstico</span>
+          </a>
+          <a href="#config-librerias" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center mono text-xs">02</span>
+            <span class="mono text-xs">Setup Librerías</span>
+          </a>
+          <a href="#gitflow" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-secondary-container/15 text-secondary flex items-center justify-center mono text-xs">03</span>
+            <span class="mono text-xs">Git Flow local y GitHub</span>
+          </a>
+          <a href="#archivos-md" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-tertiary-fixed-dim/20 text-tertiary-fixed-dim flex items-center justify-center mono text-xs">04</span>
+            <span class="mono text-xs">Archivos .md</span>
+          </a>
+          <a href="#semana1" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-success-emerald/10 text-success-emerald flex items-center justify-center mono text-xs">05</span>
+            <span class="mono text-xs">Semana 1 · Modelo</span>
+          </a>
+          <a href="#semana2" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-secondary-container/15 text-secondary flex items-center justify-center mono text-xs">06</span>
+            <span class="mono text-xs">Semana 2 · DAO</span>
+          </a>
+          <a href="#semana3" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center mono text-xs">07</span>
+            <span class="mono text-xs">Semana 3 · MVC</span>
+          </a>
+          <a href="#semana4" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center mono text-xs">08</span>
+            <span class="mono text-xs">Semana 4 · Integración</span>
+          </a>
+          <a href="#javadoc-guia" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="material-symbols-outlined text-[18px]">menu_book</span>
+            <span class="mono text-xs">Guía Javadoc</span>
+          </a>
+          <a href="#checklist" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="material-symbols-outlined text-[18px]">task_alt</span>
+            <span class="mono text-xs">Checklist final</span>
+          </a>
+          <a href="#rubrica" class="w-full flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-surface-subtle text-on-surface-variant">
+            <span class="material-symbols-outlined text-[18px]">fact_check</span>
+            <span class="mono text-xs">Rúbrica</span>
+          </a>
+        </div>
+
+        <div class="mt-space-lg p-space-sm bg-surface-container-low rounded-lg border border-border-subtle">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="mono text-[11px] font-semibold text-primary">Recursos</span>
+            <span class="mono text-[11px] text-secondary">3 base</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            <a class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary" href="https://github.com/ac-teach/LibraryApp" target="_blank" rel="noreferrer">
+              <span class="material-symbols-outlined text-[15px]">code</span> LibraryApp
+            </a>
+            <a class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary" href="#glosario">
+              <span class="material-symbols-outlined text-[15px]">menu_book</span> Glosario paralelo
+            </a>
+            <a class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary" href="#bitacora">
+              <span class="material-symbols-outlined text-[15px]">edit_note</span> Bitácora
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-space-md border-t border-border-subtle bg-surface-container-lowest/70">
+        <div class="bg-primary text-surface-container-lowest rounded-xl p-space-md">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+            </div>
+            <div>
+              <span class="mono text-xs font-semibold block">Regla de trabajo</span>
+              <span class="mono text-[10px] text-primary-fixed-dim">Comprender → construir</span>
+            </div>
+          </div>
+          <p class="text-xs leading-relaxed text-inverse-on-surface">
+            No avances por cantidad de código. Avanza cuando puedas explicar qué responsabilidad tiene cada pieza y cómo se relaciona con las demás.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN + RIGHT DOCK -->
+    <div class="flex-1 overflow-y-auto scrollbar-thin bg-surface-canvas">
+      <div class="main-grid max-w-[1500px] mx-auto grid grid-cols-[minmax(0,1fr)_360px] gap-space-lg p-margin">
+
+        <main class="main-shell max-w-5xl space-y-space-lg">
+
+          <!-- HERO -->
+          <section id="inicio" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm relative overflow-hidden">
+            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-secondary-container"></div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="mono text-xs font-semibold text-secondary px-2.5 py-1 rounded-full bg-secondary-fixed">ACTIVIDAD INDIVIDUAL</span>
+                <span class="mono text-[11px] text-outline">•</span>
+                <span class="mono text-[11px] text-outline">Programación 1</span>
+              </div>
+              <span class="flex items-center gap-1.5 mono text-[11px] text-secondary bg-secondary-container/10 px-2.5 py-1 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-secondary-container"></span> 20 horas efectivas
+              </span>
+            </div>
+
+            <h1 class="text-4xl font-bold text-primary tracking-tight mb-3">
+              Reconstrucción profesional de LibraryApp
+            </h1>
+            <p class="text-lg leading-7 text-on-surface-variant max-w-4xl">
+              Aprende a leer, analizar, documentar y reconstruir una aplicación JavaFX utilizando
+              <strong class="text-primary">MVC + DAO + MySQL + JDBC + FXML + SceneBuilder</strong>.
+              El proyecto terminado es una referencia de ingeniería: tu objetivo no es copiarlo,
+              sino descubrir cómo está construido y reproducir su arquitectura paso a paso.
+            </p>
+
+            <div class="mt-4 p-4 bg-surface-subtle border border-border-subtle rounded-lg text-sm text-on-surface-variant">
+              <strong class="text-primary flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-[18px]">account_tree</span> Clases base del Proyecto LibraryApp:</strong>
+              Para este taller, el proyecto de referencia se compone de las siguientes clases e interfaces. Tu tarea será estudiarlas, documentarlas y reconstruirlas:
+              <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2 font-mono text-[11px]">
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">Principal.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">Libro.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">Autor.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">Categoria.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">Conexion.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">LibroDAO.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">LibroDAOImpl.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">LibroController.java</li>
+                <li class="bg-white p-2 rounded border border-border-subtle text-primary">LibroView.fxml</li>
+              </ul>
+            </div>
+
+            <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-border-subtle">
+              <span class="px-3 py-1 rounded-full bg-surface-subtle border border-border-subtle text-primary mono text-[11px]">Nivel: Inicial / Intermedio</span>
+              <span class="px-3 py-1 rounded-full bg-surface-subtle border border-border-subtle text-primary mono text-[11px]">JavaFX 21</span>
+              <span class="px-3 py-1 rounded-full bg-surface-subtle border border-border-subtle text-primary mono text-[11px]">MySQL Workbench</span>
+              <span class="px-3 py-1 rounded-full bg-secondary-container/10 border border-secondary-container/30 text-secondary mono text-[11px]">Javadoc + Glosario</span>
+            </div>
+          </section>
+
+          <!-- WHAT / WHY -->
+          <section class="grid md:grid-cols-2 gap-space-md">
+            <div class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined">flag</span>
+                </div>
+                <h2 class="text-xl font-semibold text-primary">Propósito</h2>
+              </div>
+              <p class="text-sm leading-6 text-on-surface-variant">
+                Comprender cómo se organiza una aplicación profesional antes de escribirla.
+                Al finalizar, podrás explicar el recorrido de un dato desde la interfaz hasta MySQL
+                y construir un flujo CRUD con responsabilidades separadas.
+              </p>
+            </div>
+
+            <div class="bg-primary text-surface-container-lowest rounded-xl p-space-lg">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-9 h-9 rounded-lg bg-secondary-container flex items-center justify-center">
+                  <span class="material-symbols-outlined">engineering</span>
+                </div>
+                <h2 class="text-xl font-semibold">Forma profesional de trabajar</h2>
+              </div>
+              <p class="text-sm leading-6 text-inverse-on-surface">
+                Cada clase sigue el mismo ciclo: <strong>observar → investigar → comprender →
+                dibujar → escribir → documentar → implementar → probar → explicar</strong>.
+              </p>
+            </div>
+          </section>
+
+          <!-- DIAGNOSTICO -->
+          <section id="diagnostico" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold">01</div>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Cuestionario diagnóstico</h2>
+                <p class="text-sm text-outline mt-1">Responde antes de construir. El diagnóstico detecta qué necesitas repasar.</p>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <details class="border border-border-subtle rounded-lg p-3 bg-surface-subtle/50">
+                <summary class="cursor-pointer font-medium text-primary">Java y POO</summary>
+                <div class="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-on-surface-variant">
+                  <div>1. Diferencia entre clase y objeto.</div>
+                  <div>2. ¿Qué es un atributo?</div>
+                  <div>3. ¿Qué es un método?</div>
+                  <div>4. ¿Para qué sirve un constructor?</div>
+                  <div>5. Diferencia entre <code>private</code>, <code>public</code> y <code>protected</code>.</div>
+                  <div>6. ¿Para qué sirven <code>get</code> y <code>set</code>?</div>
+                  <div>7. ¿Qué significa encapsulamiento?</div>
+                  <div>8. Diferencia entre clase e interfaz.</div>
+                  <div>9. ¿Qué significa <code>implements</code>?</div>
+                  <div>10. ¿Qué significan <code>static</code> y <code>final</code>?</div>
+                </div>
+              </details>
+
+              <details class="border border-border-subtle rounded-lg p-3 bg-surface-subtle/50">
+                <summary class="cursor-pointer font-medium text-primary">Base de datos y persistencia</summary>
+                <div class="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-on-surface-variant">
+                  <div>11. ¿Qué es una tabla relacional?</div>
+                  <div>12. ¿Qué es una clave primaria?</div>
+                  <div>13. ¿Qué es una clave foránea?</div>
+                  <div>14. ¿Qué significa CRUD?</div>
+                  <div>15. ¿Qué es JDBC?</div>
+                  <div>16. ¿Qué es un procedimiento almacenado?</div>
+                  <div>17. ¿Qué es DAO?</div>
+                  <div>18. ¿Por qué separar SQL del Controller?</div>
+                </div>
+              </details>
+
+              <details class="border border-border-subtle rounded-lg p-3 bg-surface-subtle/50">
+                <summary class="cursor-pointer font-medium text-primary">JavaFX y arquitectura</summary>
+                <div class="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-on-surface-variant">
+                  <div>19. ¿Qué es JavaFX?</div>
+                  <div>20. ¿Qué es FXML?</div>
+                  <div>21. ¿Qué función cumple SceneBuilder?</div>
+                  <div>22. ¿Qué es un Controller?</div>
+                  <div>23. ¿Qué significa <code>@FXML</code>?</div>
+                  <div>24. ¿Qué significa MVC?</div>
+                  <div>25. ¿Qué responsabilidad tiene el modelo?</div>
+                  <div>26. ¿Qué responsabilidad tiene la vista?</div>
+                  <div>27. ¿Qué responsabilidad tiene el controlador?</div>
+                  <div>28. Dibuja el recorrido de un dato hasta MySQL.</div>
+                </div>
+              </details>
+            </div>
+
+            <div class="mt-4 p-3 border-l-4 border-secondary-container bg-secondary-fixed/50 rounded-r-lg text-sm">
+              <strong class="text-primary">Importante:</strong> no busques respuestas para “pasar” el diagnóstico.
+              El resultado se utiliza para decidir qué conceptos debes repasar antes de avanzar.
+            </div>
+          </section>
+
+          <!-- CONFIGURACION DE LIBRERIAS A MANO -->
+          <section id="config-librerias" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold">02</div>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Configuración del Proyecto con Librerías</h2>
+                <p class="text-sm text-outline mt-1">Gestión manual de dependencias (.jar)</p>
+              </div>
+            </div>
+
+            <p class="text-sm leading-6 text-on-surface-variant mb-4">
+              En esta modalidad de trabajo, la gestión de dependencias externas (Driver JDBC de MySQL y SDK de JavaFX) se realiza incorporando físicamente los archivos binarios <code>.jar</code> en el directorio del proyecto y configurándolos manualmente en el IDE y en las instrucciones de compilación/ejecución.
+            </p>
+
+            <div class="space-y-4">
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                <h3 class="font-semibold text-primary flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">folder_zip</span>
+                  Estructura física del directorio `lib/`
+                </h3>
+                <p class="text-sm text-on-surface-variant mt-1">Crea una carpeta llamada <code>lib</code> en la raíz del proyecto e incluye los siguientes conectores y módulos:</p>
+                <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>LibraryApp/
+├── lib/
+│   ├── mysql-connector-j-8.3.0.jar        # Driver JDBC de MySQL
+│   ├── javafx.base.jar                    # JavaFX Base Module
+│   ├── javafx.controls.jar                # JavaFX UI Controls
+│   ├── javafx.fxml.jar                    # JavaFX FXML Loader
+│   └── javafx.graphics.jar                # JavaFX Graphics
+│   └── javafx.media.jar                   # JavaFX Medios
+│   └── javafx.swing.jar                   # JavaFX Componentes Swing
+│   └── javafx.web.jar                     # JavaFX Elemenots Web
+├── src/                                   # Código fuente Java (.java)
+└── bin/                                   # Bytecode compilado (.class)</code></pre>
+              </div>
+
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                <h3 class="font-semibold text-primary flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">settings</span>
+                  Instrucciones de configuración en IDEs principales
+                </h3>
+
+                <div class="mt-3 space-y-3 text-sm text-on-surface-variant">
+                  <div class="bg-white p-3 rounded-lg border border-border-subtle">
+                    <strong class="text-primary block mb-1">En NetBeans IDE:</strong>
+                    1. Clic derecho en el proyecto &gt; <strong>Properties</strong> &gt; <strong>Libraries</strong>.<br>
+                    2. En la pestaña <strong>Classpath</strong>, haz clic en <strong>Add JAR/Folder</strong>.<br>
+                    3. Navega a la carpeta <code>lib/</code>, selecciona todos los archivos <code>.jar</code> y presiona <strong>Open</strong>.<br>
+                    4. En la pestaña <strong>Run</strong>, añade los VM Options para JavaFX:
+                    <code class="block mt-1 bg-surface-subtle p-2 rounded text-xs">--module-path "C:\javafx-sdk-21.0.11\lib" --add-modules javafx.controls,javafx.fxml</code>
+                  </div>                
+                </div>
+              </div>
+
+              <div class="p-4 bg-primary text-white rounded-xl">
+                <h3 class="font-semibold flex items-center gap-2">
+                  <span class="material-symbols-outlined text-secondary-container">terminal</span>
+                  Compilación y Ejecución manual por Línea de Comandos (CLI) si es necesario
+                </h3>
+                <p class="text-sm text-inverse-on-surface mt-1">Si compilas directamente desde la terminal, utiliza las siguientes instrucciones especificando el classpath y los módulos de JavaFX:</p>
+                
+                <div class="mt-3 space-y-2">
+                  <span class="mono text-xs text-primary-fixed-dim block">1. Compilación:</span>
+                  <pre class="bg-code-canvas text-inverse-on-surface p-3 rounded-lg text-xs overflow-x-auto"><code>javac -cp "lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml -d bin src/org/ac/model/*.java src/org/ac/dao/*.java src/org/ac/controller/*.java</code></pre>
+
+                  <span class="mono text-xs text-primary-fixed-dim block mt-2">2. Ejecución:</span>
+                  <pre class="bg-code-canvas text-inverse-on-surface p-3 rounded-lg text-xs overflow-x-auto"><code>java -cp "bin:lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml org.ac.Main</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- RUTA / ARCHITECTURE -->
+          <section id="ruta" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Mapa de arquitectura</h2>
+                <p class="text-sm text-outline mt-1">Aprende la responsabilidad de cada capa antes de memorizar código.</p>
+              </div>
+              <span class="mono text-[11px] bg-surface-subtle border border-border-subtle px-2 py-1 rounded-full text-primary">MVC + DAO</span>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-2 items-stretch">
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle text-center">
+                <span class="material-symbols-outlined text-primary">person</span>
+                <div class="font-medium text-primary mt-1">Usuario</div>
+                <div class="mono text-[10px] text-outline mt-1">interacción</div>
+              </div>
+              <div class="hidden md:flex items-center justify-center text-secondary-container">
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle text-center">
+                <span class="material-symbols-outlined text-primary">web</span>
+                <div class="font-medium text-primary mt-1">Vista</div>
+                <div class="mono text-[10px] text-outline mt-1">FXML + SceneBuilder</div>
+              </div>
+              <div class="hidden md:flex items-center justify-center text-secondary-container">
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </div>
+              <div class="p-3 rounded-lg bg-secondary-container/10 border border-secondary-container/30 text-center">
+                <span class="material-symbols-outlined text-secondary">code</span>
+                <div class="font-medium text-primary mt-1">Controller</div>
+                <div class="mono text-[10px] text-outline mt-1">eventos + coordinación</div>
+              </div>
+            </div>
+
+            <div class="my-3 text-center text-outline">
+              <span class="material-symbols-outlined">south</span>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-3">
+              <div class="p-4 rounded-lg bg-primary text-white">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-secondary-container">dataset</span>
+                  <strong>Model</strong>
+                </div>
+                <p class="text-sm text-inverse-on-surface mt-2">Representa los objetos y datos del dominio.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-surface-subtle border border-border-subtle">
+                <div class="flex items-center gap-2 text-primary">
+                  <span class="material-symbols-outlined">swap_horiz</span>
+                  <strong>DAO</strong>
+                </div>
+                <p class="text-sm text-on-surface-variant mt-2">Define el contrato para acceder a los datos.</p>
+              </div>
+              <div class="p-4 rounded-lg bg-code-canvas text-white">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-tertiary-fixed-dim">database</span>
+                  <strong>MySQL</strong>
+                </div>
+                <p class="text-sm text-slate-300 mt-2">Persistencia: tablas, relaciones y procedimientos.</p>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-surface-subtle rounded-lg text-sm text-on-surface-variant">
+              <strong class="text-primary">Pregunta profesional:</strong>
+              ¿qué ocurriría si el Controller contuviera FXML, SQL, conexión, validaciones y reglas de negocio en una sola clase?
+              Investiga <strong>separación de responsabilidades</strong>, <strong>acoplamiento</strong> y <strong>cohesión</strong>.
+            </div>
+          </section>
+
+          <!-- GIT FLOW & GITHUB CLI -->
+          <section id="gitflow" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold">03</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2.5 py-1 rounded-full">CONTROL DE VERSIONES Y SETUP LOCAL</span>
+                    <h2 class="text-2xl font-semibold text-primary mt-2">Git Flow y Configuración de Repositorio con GitHub CLI</h2>
+                  </div>
+                  <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">obligatorio</span>
+                </div>
+
+                <p class="text-sm leading-6 text-on-surface-variant mt-4">
+                  El repositorio de LibraryApp no será solamente un lugar donde almacenar el código terminado.
+                  Durante esta actividad Git debe registrar <strong class="text-primary">cómo construyes el proyecto</strong> desde cero, usando herramientas locales y conectando a GitHub.
+                </p>
+
+                <div class="mt-5 p-4 bg-primary rounded-xl text-white">
+                  <div class="mono text-[11px] text-primary-fixed-dim mb-2">MODELO DE RAMAS</div>
+                  <pre class="overflow-x-auto text-xs text-inverse-on-surface leading-relaxed"><code>main
+  │
+  └── develop
+       ├── feature/setup-project
+       ├── feature/model-libro
+       ├── feature/dao-libro
+       ├── feature/javafx-libro
+       ├── feature/docs-glosario
+       └── feature/documentacion
+
+release/1.0.0 → main
+hotfix/1.0.1   → main + develop</code></pre>
+                </div>
+
+                <!-- CONFIGURACION DE GIT LOCAL Y GITHUB CLI -->
+                <div class="space-y-4 mt-5">
+                  
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">3.1 Inicializar Proyecto Independiente</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Construirás tu propia versión del sistema desde cero. Empieza creando tu carpeta y configurando Git de manera local.
+                    </p>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code># Crea la carpeta del proyecto
+mkdir LibraryApp_NombreApellido
+
+# Entra a la carpeta
+cd LibraryApp_NombreApellido
+
+# Inicializa el control de versiones vacío
+git init</code></pre>
+                  </div>
+
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">3.2 Crear y vincular repositorio en GitHub con GitHub CLI</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Utiliza <code>gh</code> (GitHub CLI) para crear el proyecto remoto en tu cuenta y enlazado automáticamente a tu directorio de trabajo local.
+                    </p>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code># Crea el repositorio privado en tu GitHub indicando como fuente el directorio actual (.)
+gh repo create LibraryApp_NombreApellido --private --source=. --remote=origin</code></pre>
+                    <div class="mt-3 p-3 bg-white border border-border-subtle rounded-lg text-sm text-on-surface-variant">
+                      <strong class="text-primary block mb-1">¿Qué hace este comando?</strong>
+                      Genera el repositorio vacío en la nube, agrega el <code>remote</code> llamado <strong>origin</strong> a tu Git local, y te permite hacer <code>push</code> en los siguientes pasos sin tener que usar el navegador.
+                    </div>
+                  </div>
+
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">3.3 Inicializar Git Flow</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">
+                      Una vez vinculado, inicializa la estructura de ramas. Deja todas las opciones por defecto (presionando Enter).
+                    </p>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code># Crea las ramas base (main y develop) y configura los prefijos
+git flow init
+
+# Verifica que te encuentras en develop
+git status</code></pre>
+                  </div>
+
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">3.4 Convención de commits</h3>
+                    <p class="text-sm text-on-surface-variant mt-1">El mensaje debe explicar qué cambió y, de ser posible, en qué capa ocurrió.</p>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>feat(model): agregar clase Libro
+feat(dao): implementar LibroDAO
+feat(ui): crear formulario de libros
+docs(javadoc): documentar LibroDAOImpl
+docs(glosario): agregar concepto JDBC</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ARCHIVOS MARKDOWN (.MD) REQUERIDOS -->
+          <section id="archivos-md" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3 mb-5">
+              <div class="w-9 h-9 rounded-full bg-tertiary-fixed-dim text-tertiary flex items-center justify-center font-bold">04</div>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Archivos Markdown (.md) para la Entrega de Documentación</h2>
+                <p class="text-sm text-outline mt-1">Estructura estandarizada de entregables técnicos en la raíz del repositorio.</p>
+              </div>
+            </div>
+
+            <p class="text-sm leading-6 text-on-surface-variant mb-4">
+              Además del código fuente, el proyecto debe contener <strong>tres archivos Markdown (.md)</strong> obligatorios en la raíz, los cuales consolidan la investigación, las fichas conceptuales y el análisis técnico del estudiante.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4">
+              <!-- CUESTIONARIO.MD -->
+              <div class="p-4 bg-surface-subtle rounded-xl border border-border-subtle flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 text-primary font-semibold text-lg mb-2">
+                    <span class="material-symbols-outlined text-secondary">quiz</span>
+                    CUESTIONARIO.md
+                  </div>
+                  <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+                    Contiene las 28 preguntas del cuestionario diagnóstico respondiendo formalmente cada apartado: Java/POO, Persistencia y JavaFX/MVC.
+                  </p>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-border-subtle mono text-[11px] text-outline">
+                  <strong>Campos requeridos:</strong><br>
+                  • Pregunta N°<br>
+                  • Respuesta investigada<br>
+                  • Explicación con propias palabras<br>
+                  • Ejemplo de aplicación en LibraryApp
+                </div>
+              </div>
+
+              <!-- GLOSARIO.MD -->
+              <div class="p-4 bg-surface-subtle rounded-xl border border-border-subtle flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 text-primary font-semibold text-lg mb-2">
+                    <span class="material-symbols-outlined text-secondary">menu_book</span>
+                    GLOSARIO.md
+                  </div>
+                  <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+                    Fichas técnicas individuales para un mínimo de <strong>25 conceptos clave</strong> vinculados directamente con las clases del proyecto.
+                  </p>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-border-subtle mono text-[11px] text-outline">
+                  <strong>Campos por Ficha:</strong><br>
+                  1. Término técnico<br>
+                  2. Definición formal<br>
+                  3. Definición en mis palabras<br>
+                  4. Ubicación en el código<br>
+                  5. Ejemplo práctico & problema que resuelve
+                </div>
+              </div>
+
+              <!-- COMPONENTES.MD -->
+              <div class="p-4 bg-surface-subtle rounded-xl border border-border-subtle flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 text-primary font-semibold text-lg mb-2">
+                    <span class="material-symbols-outlined text-secondary">analytics</span>
+                    COMPONENTES.md
+                  </div>
+                  <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+                    Bitácora de investigación y análisis arquitectónico de cada clase, interfaz y archivo FXML reconstruido.
+                  </p>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-border-subtle mono text-[11px] text-outline">
+                  <strong>Campos por Componente:</strong><br>
+                  • Nombre de la clase / paquete<br>
+                  • Capa arquitectónica (MVC/DAO)<br>
+                  • Responsabilidad única<br>
+                  • Dependencias directas<br>
+                  • Diagrama/Flujo del dato
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- GUIA DETALLADA Y EJEMPLOS DE JAVADOC -->
+          <section id="javadoc-guia" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-9 h-9 rounded-lg bg-primary text-white flex items-center justify-center">
+                <span class="material-symbols-outlined">menu_book</span>
+              </div>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Guía Javadoc: Etiquetas Principales y Ejemplos Prácticos</h2>
+                <p class="text-sm text-outline mt-1">Estándar profesional de documentación formal dentro del código Java.</p>
+              </div>
+            </div>
+
+            <p class="text-sm leading-6 text-on-surface-variant mb-4">
+              Javadoc es la herramienta estándar para generar documentación en formato HTML directamente desde los comentarios del código fuente. Todo el código reconstruido en LibraryApp debe incluir Javadoc en nivel de clase, interfaz, atributos y métodos públicos.
+            </p>
+
+            <div class="space-y-4">
+              <!-- TABLA DE ETIQUETAS -->
+              <div class="overflow-x-auto rounded-lg border border-border-subtle">
+                <table class="w-full text-sm">
+                  <thead class="bg-surface-subtle">
+                    <tr class="text-left mono text-[11px] text-primary">
+                      <th class="p-3">Etiqueta Javadoc</th>
+                      <th class="p-3">Aplica a</th>
+                      <th class="p-3">Descripción / Propósito</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-border-subtle text-xs text-on-surface-variant">
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@author</td>
+                      <td class="p-3">Clase, Interfaz</td>
+                      <td class="p-3">Indica el nombre del desarrollador o autor que creó/mantiene el componente.</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@version</td>
+                      <td class="p-3">Clase, Interfaz</td>
+                      <td class="p-3">Define la versión actual del módulo (ej. 1.0.0).</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@param &lt;nombre&gt;</td>
+                      <td class="p-3">Métodos, Constructores</td>
+                      <td class="p-3">Describe el propósito de un parámetro de entrada y sus restricciones o formato esperado.</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@return</td>
+                      <td class="p-3">Métodos (non-void)</td>
+                      <td class="p-3">Explica el valor de retorno que produce el método tras su ejecución exitosa.</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@throws / @exception</td>
+                      <td class="p-3">Métodos, Constructores</td>
+                      <td class="p-3">Documenta las excepciones explícitas que el método puede lanzar bajo condiciones erróneas.</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 mono text-primary font-semibold">@see</td>
+                      <td class="p-3">General</td>
+                      <td class="p-3">Añade una referencia cruzada a otra clase, método o enlace relevante.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- EJEMPLO PRACTICO EN CLASE Y METODO -->
+              <div class="p-4 bg-code-canvas text-inverse-on-surface rounded-xl">
+                <div class="mono text-xs text-tertiary-fixed-dim mb-2">// EJEMPLO PRÁCTICO DE JAVADOC PROFESIONAL</div>
+                <pre class="overflow-x-auto text-xs leading-relaxed"><code>package org.ac.dao;
+
+import org.ac.model.Libro;
+import java.util.List;
+
+/**
+ * Contrato DAO que define las operaciones de persistencia CRUD
+ * para la entidad {@link Libro} dentro del sistema LibraryApp.
+ * 
+ * @author Nombre del Estudiante
+ * @version 1.0.0
+ * @see org.ac.model.Libro
+ */
+public interface LibroDAO {
+
+    /**
+     * Registra un nuevo libro en la base de datos MySQL mediante un procedimiento almacenado.
+     * 
+     * @param libro Objeto {@link Libro} que contiene los datos a registrar. No debe ser null.
+     * @return {@code true} si la inserción fue exitosa; {@code false} en caso contrario.
+     * @throws IllegalArgumentException si el parámetro libro contiene datos inválidos o vacíos.
+     * @throws RuntimeException si ocurre un error de conexión con JDBC o la base de datos.
+     */
+    boolean insertar(Libro libro);
+
+    /**
+     * Recupera el listado completo de libros registrados en la librería.
+     * 
+     * @return Una lista de tipo {@link List} que contiene los objetos {@link Libro}.
+     *         Retorna una lista vacía si no existen registros en la base de datos.
+     */
+    List&lt;Libro&gt; listar();
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- CRONOGRAMA Y ENTREGABLES SEMANALES ESPECÍFICOS -->
+
+          <!-- SEMANA 1 -->
+          <section id="semana1" class="step-card bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold shadow-sm">1</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">SEMANA 1 · 5 HORAS</span>
+                    <h2 class="text-2xl font-semibold text-primary mt-2">Semana 1 · Modelo de Dominio y Configuración Inicial</h2>
+                  </div>
+                  <span class="mono text-[11px] text-success-emerald bg-success-emerald/10 px-2 py-1 rounded-full">Base conceptual</span>
+                </div>
+
+                <!-- INVESTIGACIÓN Y ELEMENTOS EXTRA -->
+                <div class="mt-4 p-4 bg-tertiary-fixed/20 border border-tertiary-fixed-dim rounded-xl text-sm text-on-surface-variant">
+                  <h4 class="font-bold text-tertiary-fixed-dim mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span> Investigación y Documentación Semanal</h4>
+                  <p class="mb-2"><strong>Cuestionamiento extra:</strong> ¿Cuál es la diferencia técnica entre un tipo primitivo y una clase envolvente (Wrapper) en Java al manejar datos para el Modelo? <a href="https://docs.oracle.com/javase/tutorial/java/data/numberclasses.html" target="_blank" rel="noreferrer" class="text-secondary font-medium hover:underline">Leer más (Oracle Docs)</a></p>
+                  <p class="mb-1"><strong>Agregar a GLOSARIO.md:</strong> <code>Clase</code>, <code>Objeto</code>, <code>Encapsulamiento</code>, <code>Tipo Primitivo</code>, <code>Clase Wrapper</code>.</p>
+                  <p><strong>Agregar a COMPONENTES.md:</strong> <code>Libro.java</code>, <code>Autor.java</code>, <code>Categoria.java</code>.</p>
+                </div>
+
+                <!-- METAS DETALLADAS -->
+                <div class="mt-4 grid md:grid-cols-2 gap-3">
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Qué deben tener terminado?</strong>
+                    <p class="text-xs text-on-surface-variant">Configuración del proyecto con directorio <code>lib/</code>, resolución del cuestionario diagnóstico completo, implementación de las clases del paquete <code>model</code> y primeras fichas de documentación.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Cuántos de cada qué? (Cantidades)</strong>
+                      <div class="package-checklist">
+                      <label><input type="checkbox"><span><strong>Principal.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Autor.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibro.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Categoria.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Cliente.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVenta.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Editorial.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Libro.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LineaFactura.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LineaVenta.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Usuario.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Venta.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Conexion.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>SecurityUtil.java</strong><br><span class="text-outline">package model / system / util</span> · terminar + Javadoc + prueba</span></label>
+                      </div>
+                      <p class="text-xs text-on-surface-variant mt-2">Total: <strong>14/14</strong> archivos Java asignados a Semana 1.</p>
+                      <p class="text-[11px] text-outline mt-2"><strong>Meta de Semana 1:</strong> 14 clases Java terminadas y documentadas: 1 de <code>system</code> + 11 de <code>model</code> + 2 de <code>util</code>.</p>
+
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿De qué manera? (Workflow)</strong>
+                    <p class="text-xs text-on-surface-variant">En la rama <code>feature/setup-project</code> y <code>feature/model-libro</code>. Registrando commits con formato <code>feat(model): ...</code> y subiendo avances a <code>develop</code> en GitHub.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Con qué calidad y detalle?</strong>
+                    <p class="text-xs text-on-surface-variant">Atributos estrictamente <code>private</code>, getters/setters completos, constructores overloaded (vacío y parametrizado), método <code>toString()</code> funcional y 100% de Javadoc en clase y métodos.</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4 mt-5">
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">1.1 Reconocer la estructura</h3>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>src/
+└── org/ac/
+    ├── controller/
+    ├── dao/
+    ├── exception/
+    ├── manager/
+    ├── model/
+    ├── system/
+    ├── util/
+    └── view/
+        └── fxml/</code></pre>
+                  </div>
+
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">1.2 Construir Model</h3>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>public class Libro {
+    private int idLibro;
+    private String titulo;
+    private String isbn;
+    private double precio;
+
+    // Constructores, Getters/Setters y Javadoc completo
+}</code></pre>
+                  </div>
+                </div>
+
+                  <div class="git-mini">
+                    <h4>Git Flow · pasos de esta semana</h4>
+                    <ol class="text-xs leading-relaxed space-y-1 list-decimal pl-5">
+                      <li><strong>Antes de comenzar:</strong> vuelve a <code>develop</code> y actualiza tu copia local.</li>
+                      <li><strong>Crea la rama:</strong> <code>git flow feature start model-foundation</code>. Una rama es una copia de trabajo donde haces cambios sin poner en riesgo <code>develop</code>.</li>
+                      <li><strong>Trabaja:</strong> crea los archivos de esta semana, agrega Javadoc, prueba y corrige.</li>
+                      <li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(setup): preparar estructura inicial de LibraryApp_NombreApellido"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(model): construir entidades del paquete model"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "docs(javadoc): documentar entidades y actualizar glosario"</code>.</li>
+                      <li><strong>Sube la rama:</strong> <code>git push -u origin feature/model-foundation</code>.</li>
+                      <li><strong>Pull Request:</strong> abre un Pull Request desde <code>feature/model-foundation</code> hacia <code>develop</code>. Un Pull Request es una solicitud para revisar y unir tus cambios.</li>
+                      <li><strong>No cierres la semana en local solamente:</strong> el docente debe poder revisar tus commits y el Pull Request.</li>
+                    </ol>
+                  </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEMANA 2 -->
+          <section id="semana2" class="step-card bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">SEMANA 2 · 5 HORAS</span>
+                    <h2 class="text-2xl font-semibold text-primary mt-2">Semana 2 · Persistencia con DAO, JDBC y MySQL</h2>
+                  </div>
+                  <span class="mono text-[11px] text-primary bg-surface-subtle px-2 py-1 rounded-full">Persistencia</span>
+                </div>
+
+                <!-- INVESTIGACIÓN Y ELEMENTOS EXTRA -->
+                <div class="mt-4 p-4 bg-tertiary-fixed/20 border border-tertiary-fixed-dim rounded-xl text-sm text-on-surface-variant">
+                  <h4 class="font-bold text-tertiary-fixed-dim mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span> Investigación y Documentación Semanal</h4>
+                  <p class="mb-2"><strong>Cuestionamiento extra:</strong> ¿Qué es la "Inyección SQL" y cómo las clases <code>PreparedStatement</code> y <code>CallableStatement</code> ayudan a prevenirla? <a href="https://dev.mysql.com/doc/connector-j/en/connector-j-usagenotes-statements-callable.html" target="_blank" rel="noreferrer" class="text-secondary font-medium hover:underline">Leer más (MySQL Docs)</a></p>
+                  <p class="mb-1"><strong>Agregar a GLOSARIO.md:</strong> <code>DAO</code>, <code>JDBC</code>, <code>Singleton</code>, <code>PreparedStatement</code>, <code>Inyección SQL</code>.</p>
+                  <p><strong>Agregar a COMPONENTES.md:</strong> <code>Conexion.java</code>, <code>LibroDAO.java</code>, <code>LibroDAOImpl.java</code>.</p>
+                </div>
+
+                <!-- METAS DETALLADAS -->
+                <div class="mt-4 grid md:grid-cols-2 gap-3">
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Qué deben tener terminado?</strong>
+                    <p class="text-xs text-on-surface-variant">Conexión Singleton a MySQL Workbench con el driver JDBC manual, interfaces e implementaciones del patrón DAO y pruebas de consola para operaciones CRUD.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Cuántos de cada qué? (Cantidades)</strong>
+                      <div class="package-checklist">
+                      <label><input type="checkbox"><span><strong>Dao.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Crud.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaDAO.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaDAOImpl.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ValidacionException.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>SesionContext.java</strong><br><span class="text-outline">package dao / dao.impl / exception / manager</span> · terminar + Javadoc + prueba</span></label>
+                      </div>
+                      <p class="text-xs text-on-surface-variant mt-2">Total: <strong>24/24</strong> archivos Java asignados a Semana 2.</p>
+                      <p class="text-[11px] text-outline mt-2"><strong>Meta de Semana 2:</strong> 24 archivos Java de persistencia/gestión terminados: 12 en <code>dao</code> + 10 en <code>dao/impl</code> + 1 en <code>exception</code> + 1 en <code>manager</code>.</p>
+
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿De qué manera? (Workflow)</strong>
+                    <p class="text-xs text-on-surface-variant">En la rama <code>feature/dao-libro</code>. Uso de <code>CallableStatement</code> y <code>PreparedStatement</code> para llamar procedimientos almacenados de MySQL.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Con qué calidad y detalle?</strong>
+                    <p class="text-xs text-on-surface-variant">Uso obligatorio de Try-With-Resources para prevenir fugas de memoria, manejo adecuado de <code>SQLException</code>, Javadoc con etiquetas <code>@param</code>, <code>@return</code> y <code>@throws</code>.</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4 mt-5">
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">2.1 Contrato DAO</h3>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>public interface LibroDAO {
+    boolean insertar(Libro libro);
+    List&lt;Libro&gt; listar();
+    Libro buscarPorId(int id);
+    boolean actualizar(Libro libro);
+    boolean eliminar(int id);
+}</code></pre>
+                  </div>
+                </div>
+
+                  <div class="git-mini">
+                    <h4>Git Flow · pasos de esta semana</h4>
+                    <ol class="text-xs leading-relaxed space-y-1 list-decimal pl-5">
+                      <li><strong>Antes de comenzar:</strong> vuelve a <code>develop</code> y actualiza tu copia local.</li>
+                      <li><strong>Crea la rama:</strong> <code>git flow feature start dao-persistence</code>. Una rama es una copia de trabajo donde haces cambios sin poner en riesgo <code>develop</code>.</li>
+                      <li><strong>Trabaja:</strong> crea los archivos de esta semana, agrega Javadoc, prueba y corrige.</li>
+                      <li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(dao): definir contratos DAO"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(dao): implementar acceso MySQL y procedimientos"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(session): agregar excepcion y contexto de sesión"</code>.</li>
+                      <li><strong>Sube la rama:</strong> <code>git push -u origin feature/dao-persistence</code>.</li>
+                      <li><strong>Pull Request:</strong> abre un Pull Request desde <code>feature/dao-persistence</code> hacia <code>develop</code>. Un Pull Request es una solicitud para revisar y unir tus cambios.</li>
+                      <li><strong>No cierres la semana en local solamente:</strong> el docente debe poder revisar tus commits y el Pull Request.</li>
+                    </ol>
+                  </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEMANA 3 -->
+          <section id="semana3" class="step-card bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold">3</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">SEMANA 3 · 5 HORAS</span>
+                    <h2 class="text-2xl font-semibold text-primary mt-2">Semana 3 · Interfaz Gráfica con JavaFX, FXML y MVC</h2>
+                  </div>
+                  <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">Interfaz</span>
+                </div>
+
+                <!-- INVESTIGACIÓN Y ELEMENTOS EXTRA -->
+                <div class="mt-4 p-4 bg-tertiary-fixed/20 border border-tertiary-fixed-dim rounded-xl text-sm text-on-surface-variant">
+                  <h4 class="font-bold text-tertiary-fixed-dim mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span> Investigación y Documentación Semanal</h4>
+                  <p class="mb-2"><strong>Cuestionamiento extra:</strong> ¿Por qué JavaFX utiliza <code>ObservableList</code> en lugar de las Listas clásicas de Java (ArrayList) para nutrir componentes como el TableView? <a href="https://openjfx.io/javadoc/21/javafx.base/javafx/collections/ObservableList.html" target="_blank" rel="noreferrer" class="text-secondary font-medium hover:underline">Leer más (OpenJFX Docs)</a></p>
+                  <p class="mb-1"><strong>Agregar a GLOSARIO.md:</strong> <code>FXML</code>, <code>SceneBuilder</code>, <code>Controller</code>, <code>ObservableList</code>, <code>TableView</code>.</p>
+                  <p><strong>Agregar a COMPONENTES.md:</strong> <code>LibroView.fxml</code>, <code>LibroController.java</code>.</p>
+                </div>
+
+                <!-- METAS DETALLADAS -->
+                <div class="mt-4 grid md:grid-cols-2 gap-3">
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Qué deben tener terminado?</strong>
+                    <p class="text-xs text-on-surface-variant">Diseño de vistas FXML en SceneBuilder, creación de controladores MVC JavaFX con desacoplamiento total y vinculación de tablas con <code>ObservableList</code>.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Cuántos de cada qué? (Cantidades)</strong>
+                      <div class="package-checklist">
+                      <label><input type="checkbox"><span><strong>AdminDashboradController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CajeroController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EmpleadoController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>InicioSesionController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>InventarioController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ListaVentasController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>RegistrarUsuarioController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaController.java</strong><br><span class="text-outline">package controller</span> · terminar + Javadoc + prueba</span></label>
+                      </div>
+                      <p class="text-xs text-on-surface-variant mt-2">Total: <strong>17/17</strong> archivos Java del package <code>controller</code>. Además, se revisan todos los FXML/CSS existentes.</p>
+                      <p class="text-[11px] text-outline mt-2"><strong>Meta de Semana 3:</strong> 17 Controllers Java terminados y todas las vistas FXML/CSS necesarias para probar los módulos asignados.</p>
+
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿De qué manera? (Workflow)</strong>
+                    <p class="text-xs text-on-surface-variant">En la rama <code>feature/javafx-libro</code>. Vinculación estricta entre <code>fx:id</code> en SceneBuilder y anotaciones <code>@FXML</code> en el Controller.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Con qué calidad y detalle?</strong>
+                    <p class="text-xs text-on-surface-variant">Validación de entrada en campos de texto (no vacíos, conversión numérica segura), diálogos de alerta (<code>Alert</code>) para notificar errores o confirmaciones de usuario.</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4 mt-5">
+                  <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <h3 class="font-semibold text-primary">3.1 Controller JavaFX</h3>
+                    <pre class="mt-3 bg-code-canvas text-inverse-on-surface rounded-lg p-4 overflow-x-auto text-xs"><code>public class LibroController implements Initializable {
+    @FXML private TableView&lt;Libro&gt; tblLibros;
+    @FXML private TextField txtTitulo;
+    
+    private LibroDAO libroDAO = new LibroDAOImpl();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // Cargar datos en TableView
+    }
+}</code></pre>
+                  </div>
+                </div>
+
+                  <div class="git-mini">
+                    <h4>Git Flow · pasos de esta semana</h4>
+                    <ol class="text-xs leading-relaxed space-y-1 list-decimal pl-5">
+                      <li><strong>Antes de comenzar:</strong> vuelve a <code>develop</code> y actualiza tu copia local.</li>
+                      <li><strong>Crea la rama:</strong> <code>git flow feature start javafx-mvc</code>. Una rama es una copia de trabajo donde haces cambios sin poner en riesgo <code>develop</code>.</li>
+                      <li><strong>Trabaja:</strong> crea los archivos de esta semana, agrega Javadoc, prueba y corrige.</li>
+                      <li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(controller): construir controladores JavaFX"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(view): completar vistas FXML y CSS"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "feat(mvc): conectar vista, controller, dao y model"</code>.</li>
+                      <li><strong>Sube la rama:</strong> <code>git push -u origin feature/javafx-mvc</code>.</li>
+                      <li><strong>Pull Request:</strong> abre un Pull Request desde <code>feature/javafx-mvc</code> hacia <code>develop</code>. Un Pull Request es una solicitud para revisar y unir tus cambios.</li>
+                      <li><strong>No cierres la semana en local solamente:</strong> el docente debe poder revisar tus commits y el Pull Request.</li>
+                    </ol>
+                  </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SEMANA 4 -->
+          <section id="semana4" class="step-card bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-bold">4</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">SEMANA 4 · 5 HORAS</span>
+                    <h2 class="text-2xl font-semibold text-primary mt-2">Semana 4 · Integración, Documentación y Defensa</h2>
+                  </div>
+                  <span class="mono text-[11px] text-primary bg-surface-subtle px-2 py-1 rounded-full">Síntesis</span>
+                </div>
+
+                <!-- INVESTIGACIÓN Y ELEMENTOS EXTRA -->
+                <div class="mt-4 p-4 bg-tertiary-fixed/20 border border-tertiary-fixed-dim rounded-xl text-sm text-on-surface-variant">
+                  <h4 class="font-bold text-tertiary-fixed-dim mb-2 flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span> Investigación y Documentación Semanal</h4>
+                  <p class="mb-2"><strong>Cuestionamiento extra:</strong> ¿Cuáles son las mejores prácticas para el manejo de excepciones y notificaciones en interfaces de usuario para no exponer código interno o StackTraces? <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/" target="_blank" rel="noreferrer" class="text-secondary font-medium hover:underline">Leer más (Java Exceptions)</a></p>
+                  <p class="mb-1"><strong>Agregar a GLOSARIO.md:</strong> <code>Excepción</code>, <code>Manejo de Errores</code>, <code>Release</code>, <code>Tag (Git)</code>.</p>
+                  <p><strong>Agregar a COMPONENTES.md:</strong> <code>Principal.java</code>.</p>
+                </div>
+
+                <!-- METAS DETALLADAS -->
+                <div class="mt-4 grid md:grid-cols-2 gap-3">
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Qué deben tener terminado?</strong>
+                    <p class="text-xs text-on-surface-variant">Integración final del sistema ejecutando localmente, finalización de los 3 documentos .md, y preparación para la defensa individual oral.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Cuántos de cada qué? (Cantidades)</strong>
+                      <div class="package-checklist">
+                      <label><input type="checkbox"><span><strong>Principal.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Autor.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibro.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Categoria.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Cliente.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVenta.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Editorial.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Libro.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LineaFactura.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LineaVenta.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Usuario.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Venta.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Conexion.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>SecurityUtil.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Dao.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>Crud.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaDAO.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaDAOImpl.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ValidacionException.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>SesionContext.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AdminDashboradController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>AutorLibroController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CajeroController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>CategoriaController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ClienteController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>DetalleVentaController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EditorialController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>EmpleadoController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>FacturaController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>InicioSesionController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>InventarioController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>LibroController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>ListaVentasController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>RegistrarUsuarioController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>UsuarioController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      <label><input type="checkbox"><span><strong>VentaController.java</strong><br><span class="text-outline">inventario total de packages</span> · terminar + Javadoc + prueba</span></label>
+                      </div>
+                      <p class="text-xs text-on-surface-variant mt-2">Total: <strong>55/55</strong> comprobaciones Java acumuladas. Semana 4 no crea nuevas clases: verifica, corrige y documenta las anteriores.</p>
+                      <p class="text-[11px] text-outline mt-2"><strong>Meta de Semana 4:</strong> cerrar el inventario completo del proyecto y demostrar que todos los paquetes y archivos fueron estudiados, documentados y probados.</p>
+
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿De qué manera? (Workflow)</strong>
+                    <p class="text-xs text-on-surface-variant">Rama <code>feature/docs-glosario</code> a <code>develop</code>, posterior <code>release/1.0.0</code> y merge final a <code>main</code> con tag etiquetado y comando <code>git push --tags</code>.</p>
+                  </div>
+                  <div class="p-3 bg-surface-subtle rounded-lg border border-border-subtle">
+                    <strong class="text-primary text-xs uppercase tracking-wider block mb-1">¿Con qué calidad y detalle?</strong>
+                    <p class="text-xs text-on-surface-variant">Cero errores de compilación local, 100% de cobertura de Javadoc en todo el código, fluidez en la explicación técnica oral sin leer el código.</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4 mt-5">
+                  <div class="p-4 bg-primary rounded-xl text-white">
+                    <h3 class="font-semibold">4.1 Defensa técnica oral individual</h3>
+                    <p class="text-sm text-inverse-on-surface mt-1">El estudiante defenderá su proyecto respondiendo el flujo de datos desde la interfaz JavaFX hasta el procedimiento en MySQL Workbench.</p>
+                  </div>
+                </div>
+
+                  <div class="git-mini">
+                    <h4>Git Flow · pasos de esta semana</h4>
+                    <ol class="text-xs leading-relaxed space-y-1 list-decimal pl-5">
+                      <li><strong>Antes de comenzar:</strong> vuelve a <code>develop</code> y actualiza tu copia local.</li>
+                      <li><strong>Crea la rama:</strong> <code>git flow feature start documentation-release</code>. Una rama es una copia de trabajo donde haces cambios sin poner en riesgo <code>develop</code>.</li>
+                      <li><strong>Trabaja:</strong> crea los archivos de esta semana, agrega Javadoc, prueba y corrige.</li>
+                      <li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "docs(javadoc): completar documentación de todos los paquetes"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "docs(md): finalizar CUESTIONARIO, GLOSARIO y COMPONENTES"</code>.</li><li><strong>Commit:</strong> <code>git add .</code> y después <code>git commit -m "release: preparar version 1.0.0"</code>.</li>
+                      <li><strong>Sube la rama:</strong> <code>git push -u origin feature/documentation-release</code>.</li>
+                      <li><strong>Pull Request:</strong> abre un Pull Request desde <code>feature/documentation-release</code> hacia <code>develop</code>. Un Pull Request es una solicitud para revisar y unir tus cambios.</li>
+                      <li><strong>No cierres la semana en local solamente:</strong> el docente debe poder revisar tus commits y el Pull Request.</li>
+                    </ol>
+                  </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PER CLASS METHOD -->
+          <section class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-9 h-9 rounded-lg bg-secondary-container/10 text-secondary-container flex items-center justify-center">
+                <span class="material-symbols-outlined">route</span>
+              </div>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Procedimiento obligatorio para cada clase</h2>
+                <p class="text-sm text-outline mt-1">Utiliza siempre la misma secuencia profesional.</p>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-2">
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">01</span><div class="font-medium text-primary mt-1">Identificar responsabilidad</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">02</span><div class="font-medium text-primary mt-1">Identificar capa</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">03</span><div class="font-medium text-primary mt-1">Identificar dependencias</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">04</span><div class="font-medium text-primary mt-1">Definir atributos</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">05</span><div class="font-medium text-primary mt-1">Definir métodos</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">06</span><div class="font-medium text-primary mt-1">Construir estructura</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">07</span><div class="font-medium text-primary mt-1">Agregar Javadoc</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">08</span><div class="font-medium text-primary mt-1">Implementar</div></div>
+              <div class="p-3 rounded-lg bg-surface-subtle border border-border-subtle"><span class="mono text-xs text-secondary">09</span><div class="font-medium text-primary mt-1">Compilar y probar</div></div>
+            </div>
+          </section>
+
+          <!-- GLOSARIO -->
+          <section id="glosario" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Glosario paralelo (GLOSARIO.md)</h2>
+                <p class="text-sm text-outline mt-1">El glosario crece junto con el proyecto.</p>
+              </div>
+              <span class="mono text-[11px] bg-secondary-fixed text-secondary px-2 py-1 rounded-full">mínimo 25 conceptos</span>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm">
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">clase</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">objeto</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">encapsulamiento</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">interfaz</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">polimorfismo</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">MVC</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">DAO</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">CRUD</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">JDBC</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">Connection</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">ResultSet</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">FXML</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">SceneBuilder</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">@FXML</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">TableView</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">ObservableList</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">Singleton</span>
+              <span class="p-2.5 rounded-lg bg-surface-subtle border border-border-subtle mono text-xs">excepción</span>
+            </div>
+          </section>
+
+          <!-- BITACORA / COMPONENTES -->
+          <section id="bitacora" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-secondary-container">edit_note</span>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Análisis de Componentes (COMPONENTES.md)</h2>
+                <p class="text-sm text-outline mt-1">Registro individual de cada clase estudiada.</p>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-border-subtle">
+              <table class="w-full text-sm">
+                <thead class="bg-surface-subtle">
+                  <tr class="text-left mono text-[11px] text-primary">
+                    <th class="p-3">Campo</th>
+                    <th class="p-3">Qué registrar</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border-subtle">
+                  <tr><td class="p-3 font-medium">Clase / Interfaz</td><td class="p-3 text-on-surface-variant">Nombre y paquete exacto.</td></tr>
+                  <tr><td class="p-3 font-medium">Capa</td><td class="p-3 text-on-surface-variant">Model, DAO, Controller, util, etc.</td></tr>
+                  <tr><td class="p-3 font-medium">Responsabilidad</td><td class="p-3 text-on-surface-variant">Para qué existe y qué no debe hacer.</td></tr>
+                  <tr><td class="p-3 font-medium">Dependencias</td><td class="p-3 text-on-surface-variant">Clases, interfaces o librerías JAR utilizadas.</td></tr>
+                  <tr><td class="p-3 font-medium">Javadoc</td><td class="p-3 text-on-surface-variant">Documentación con etiquetas principales.</td></tr>
+                  <tr><td class="p-3 font-medium">Prueba</td><td class="p-3 text-on-surface-variant">Cómo comprobaste el comportamiento.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- INVENTARIO COMPLETO DE PAQUETES -->
+          <section id="inventario-paquetes" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-secondary-container">inventory_2</span>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Inventario completo de paquetes</h2>
+                <p class="text-sm text-outline mt-1">Este es el mapa que debes completar durante las cuatro semanas. Cada casilla representa un archivo real del proyecto.</p><p class="text-[11px] text-outline mt-2"><strong>Fuente de los nombres:</strong> inventario basado en la estructura visible del repositorio LibraryApp. El package <code>dao/impl</code> se organiza alrededor de los DAO concretos; <code>Crud.java</code> y <code>Dao.java</code> son contratos base y no tienen una implementación independiente.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">model · 11</h3><p class="text-xs text-on-surface-variant mt-1">Autor, AutorLibro, Categoria, Cliente, DetalleVenta, Editorial, Libro, LineaFactura, LineaVenta, Usuario, Venta.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">dao · 12</h3><p class="text-xs text-on-surface-variant mt-1">AutorDAO, AutorLibroDAO, CategoriaDAO, ClienteDAO, Crud, Dao, DetalleVentaDAO, EditorialDAO, FacturaDAO, LibroDAO, UsuarioDAO, VentaDAO.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">dao/impl · 10</h3><p class="text-xs text-on-surface-variant mt-1">Implementaciones concretas de los DAOs específicos del dominio.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">controller · 17</h3><p class="text-xs text-on-surface-variant mt-1">Todos los controladores JavaFX del proyecto, desde autenticación y dashboards hasta ventas e inventario.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">util · 2</h3><p class="text-xs text-on-surface-variant mt-1">Conexion y SecurityUtil.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">manager · 1</h3><p class="text-xs text-on-surface-variant mt-1">SesionContext.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">exception · 1</h3><p class="text-xs text-on-surface-variant mt-1">ValidacionException.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle"><h3 class="font-semibold text-primary">system · 1</h3><p class="text-xs text-on-surface-variant mt-1">Principal.</p></div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle md:col-span-2"><h3 class="font-semibold text-primary">view · FXML/CSS</h3><p class="text-xs text-on-surface-variant mt-1">No son archivos Java. Debes revisar todos los archivos existentes en <code>view/fxml</code> y <code>view/style</code>, relacionándolos con sus controladores.</p></div>
+            </div>
+          </section>
+
+          <!-- CHECKLIST -->
+          <section id="checklist" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center justify-between pb-3 border-b border-border-subtle mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-secondary-container/10 text-secondary-container flex items-center justify-center">
+                  <span class="material-symbols-outlined">checklist</span>
+                </div>
+                <div>
+                  <h2 class="text-2xl font-semibold text-primary">Checklist de autoevaluación</h2>
+                  <p class="text-sm text-outline">Marca cada elemento cuando puedas demostrarlo.</p>
+                </div>
+              </div>
+              <span id="checklist-counter" class="mono text-[11px] font-semibold bg-surface-subtle text-primary px-2.5 py-1 rounded-full border border-border-subtle">0 / 12</span>
+            </div>
+
+            <div id="checklist-container" class="space-y-2">
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Configuré las librerías .jar manualmente en `lib/`.</span><p class="text-xs text-on-surface-variant mt-1">El proyecto compila sin gestores de dependencias Maven/Gradle.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Configuré el repositorio con gh cli y Git Flow local.</span><p class="text-xs text-on-surface-variant mt-1">El repositorio está vinculado en la nube y manejo bien mis ramas de trabajo.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Completé CUESTIONARIO.md con las 28 preguntas.</span><p class="text-xs text-on-surface-variant mt-1">Incluye explicaciones en mis propias palabras y ejemplos de LibraryApp.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Completé GLOSARIO.md con al menos 25 conceptos.</span><p class="text-xs text-on-surface-variant mt-1">Sigue el formato de fichas con ubicación en el código y ejemplos.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Completé COMPONENTES.md para todas las clases reconstruidas.</span><p class="text-xs text-on-surface-variant mt-1">Analiza capa, responsabilidades y dependencias.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Puedo explicar MVC con mis palabras.</span><p class="text-xs text-on-surface-variant mt-1">Identifico modelo, vista y controller y conozco su responsabilidad.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Puedo explicar por qué existe DAO.</span><p class="text-xs text-on-surface-variant mt-1">Sé diferenciar contrato DAO e implementación.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Puedo seguir un dato desde FXML hasta MySQL.</span><p class="text-xs text-on-surface-variant mt-1">Puedo explicar cada capa del recorrido.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Construí un DAO y su implementación con JDBC.</span><p class="text-xs text-on-surface-variant mt-1">Comprendo CRUD y su relación con CallableStatement.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Construí la vista en SceneBuilder vinculando el Controller.</span><p class="text-xs text-on-surface-variant mt-1">Comprendo FXML, fx:id y eventos de usuario.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Agregué Javadoc formal usando @author, @param, @return y @throws.</span><p class="text-xs text-on-surface-variant mt-1">Documentación completa en el 100% de clases y métodos.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+              <label class="flex items-start gap-3 p-3 rounded-lg border border-border-subtle hover:bg-surface-subtle cursor-pointer">
+                <input class="mt-1 w-4 h-4 checklist-item" type="checkbox">
+                <div class="flex-1"><span class="font-medium text-primary">Puedo demostrar el flujo Git Flow con el tag v1.0.0.</span><p class="text-xs text-on-surface-variant mt-1">Mi repositorio conserva ramas, commits significativos y versión etiquetada.</p></div>
+                <span class="status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded">Pendiente</span>
+              </label>
+            </div>
+          </section>
+
+          <!-- RUBRICA -->
+          <section id="rubrica" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-secondary-container">fact_check</span>
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Rúbrica propuesta · 100 puntos</h2>
+                <p class="text-sm text-outline mt-1">La evaluación privilegia comprensión y trazabilidad, no volumen de código.</p>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-lg border border-border-subtle">
+              <table class="w-full text-sm">
+                <thead class="bg-surface-subtle">
+                  <tr class="text-left mono text-[11px] text-primary">
+                    <th class="p-3">Criterio</th>
+                    <th class="p-3">Pts.</th>
+                    <th class="p-3">Evidencia</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border-subtle">
+                  <tr><td class="p-3 font-medium">Comprensión de arquitectura</td><td class="p-3 mono text-secondary">20</td><td class="p-3 text-on-surface-variant">Explica MVC, capas y responsabilidades.</td></tr>
+                  <tr><td class="p-3 font-medium">POO</td><td class="p-3 mono text-secondary">15</td><td class="p-3 text-on-surface-variant">Modelos, encapsulamiento, interfaces y relaciones.</td></tr>
+                  <tr><td class="p-3 font-medium">MVC + DAO</td><td class="p-3 mono text-secondary">20</td><td class="p-3 text-on-surface-variant">Flujo funcional con responsabilidades separadas.</td></tr>
+                  <tr><td class="p-3 font-medium">JavaFX + FXML + SceneBuilder</td><td class="p-3 mono text-secondary">15</td><td class="p-3 text-on-surface-variant">Vista construida y vinculada al Controller.</td></tr>
+                  <tr><td class="p-3 font-medium">MySQL + JDBC (Librerías lib/)</td><td class="p-3 mono text-secondary">10</td><td class="p-3 text-on-surface-variant">Persistencia, configuración manual de JARs y explicación.</td></tr>
+                  <tr><td class="p-3 font-medium">Javadoc con etiquetas principales</td><td class="p-3 mono text-secondary">8</td><td class="p-3 text-on-surface-variant">Documentación con @param, @return, @throws en todo el código.</td></tr>
+                  <tr><td class="p-3 font-medium">Entregables Markdown (.md)</td><td class="p-3 mono text-secondary">4</td><td class="p-3 text-on-surface-variant">GLOSARIO.md (25+), CUESTIONARIO.md y COMPONENTES.md.</td></tr>
+                  <tr><td class="p-3 font-medium">Setup Git y GitHub</td><td class="p-3 mono text-secondary">5</td><td class="p-3 text-on-surface-variant">Ramas, commits mediante Git local y vinculación de repo con gh cli.</td></tr>
+                  <tr><td class="p-3 font-medium">Defensa individual</td><td class="p-3 mono text-secondary">3</td><td class="p-3 text-on-surface-variant">Explicación sin depender del código como guion.</td></tr>
+                </tbody>
+                <tfoot class="bg-primary text-white">
+                  <tr><td class="p-3 font-semibold">Total</td><td class="p-3 mono font-semibold">100</td><td class="p-3 text-inverse-on-surface">Comprender, construir, probar y explicar.</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+
+          <!-- ENTREGA -->
+          <section id="entrega" class="bg-surface-container-lowest rounded-xl p-space-lg border border-border-subtle shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 class="text-2xl font-semibold text-primary">Entrega final</h2>
+                <p class="text-sm text-outline mt-1">Tu entrega demuestra el proceso completo.</p>
+              </div>
+              <span class="mono text-[11px] text-secondary bg-secondary-fixed px-2 py-1 rounded-full">INDIVIDUAL</span>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-3 mt-4">
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                <h3 class="font-medium text-primary">Proyecto y Librerías</h3>
+                <ul class="mt-2 text-sm text-on-surface-variant space-y-1">
+                  <li>• Código organizado por paquetes.</li>
+                  <li>• Carpeta <code>lib/</code> con archivos JAR configurados.</li>
+                  <li>• Flujo funcional mínimo.</li>
+                  <li>• Base de datos operativa.</li>
+                  <li>• Vistas FXML construidas en SceneBuilder.</li>
+                </ul>
+              </div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle">
+                <h3 class="font-medium text-primary">Documentación en Markdown</h3>
+                <ul class="mt-2 text-sm text-on-surface-variant space-y-1">
+                  <li>• Javadoc completo en código.</li>
+                  <li>• <code>GLOSARIO.md</code> (Mínimo 25 conceptos).</li>
+                  <li>• <code>CUESTIONARIO.md</code> (28 respuestas).</li>
+                  <li>• <code>COMPONENTES.md</code> (Bitácora completa).</li>
+                </ul>
+              </div>
+              <div class="p-4 bg-surface-subtle rounded-lg border border-border-subtle md:col-span-2">
+                <h3 class="font-medium text-primary">Repositorio Git local e Integración GitHub</h3>
+                <ul class="mt-2 text-sm text-on-surface-variant space-y-1">
+                  <li>• Proyecto inicializado y vinculado usando GitHub CLI (`gh`).</li>
+                  <li>• <code>main</code> representa la versión estable con Tag <code>v1.0.0</code>.</li>
+                  <li>• <code>develop</code> contiene la integración del trabajo.</li>
+                  <li>• Las tareas se desarrollan en ramas <code>feature/*</code>.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <!-- RIGHT DOCK -->
+        <aside class="desktop-dock space-y-space-md">
+          <div class="bg-surface-container-lowest rounded-xl p-space-md border border-border-subtle shadow-sm sticky top-0">
+            <div class="flex items-center justify-between mb-3">
+              <span class="mono text-[11px] font-semibold uppercase tracking-wider text-outline">Progreso de la ruta</span>
+              <span id="progress-text" class="mono text-[11px] font-semibold text-primary">0%</span>
+            </div>
+            <div class="w-full h-2 bg-surface-subtle rounded-full overflow-hidden border border-border-subtle">
+              <div id="progress-bar" class="h-full bg-secondary-container rounded-full transition-all duration-200" style="width:0%"></div>
+            </div>
+            <div class="grid grid-cols-4 gap-2 mt-4">
+              <a href="#semana1" class="text-center p-2 rounded-lg bg-surface-subtle hover:bg-primary/10"><div class="mono text-[10px] text-outline">S1</div><div class="text-xs text-primary font-medium">Model</div></a>
+              <a href="#semana2" class="text-center p-2 rounded-lg bg-surface-subtle hover:bg-primary/10"><div class="mono text-[10px] text-outline">S2</div><div class="text-xs text-primary font-medium">DAO</div></a>
+              <a href="#semana3" class="text-center p-2 rounded-lg bg-surface-subtle hover:bg-primary/10"><div class="mono text-[10px] text-outline">S3</div><div class="text-xs text-primary font-medium">MVC</div></a>
+              <a href="#semana4" class="text-center p-2 rounded-lg bg-surface-subtle hover:bg-primary/10"><div class="mono text-[10px] text-outline">S4</div><div class="text-xs text-primary font-medium">Integra</div></a>
+            </div>
+          </div>
+
+          <div class="bg-primary text-white rounded-xl p-space-md shadow-sm">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+                <span class="material-symbols-outlined text-[18px]">tips_and_updates</span>
+              </div>
+              <div>
+                <span class="mono text-xs font-semibold block">Consejo docente</span>
+                <span class="mono text-[10px] text-primary-fixed-dim">Aprender arquitectura</span>
+              </div>
+            </div>
+            <p class="text-sm leading-relaxed text-inverse-on-surface bg-primary-container/40 p-3 rounded-lg border border-primary-container">
+              No intentes memorizar una clase completa. Identifica primero su responsabilidad, sus entradas,
+              sus salidas y sus dependencias. Después reconstruye el código.
+            </p>
+          </div>
+
+          <div class="bg-surface-container-lowest rounded-xl p-space-md border border-border-subtle">
+            <h3 class="mono text-xs font-semibold text-primary uppercase tracking-wider">Alcance</h3>
+            <div class="mt-3 space-y-2 text-sm">
+              <div class="flex justify-between py-2 border-b border-border-subtle"><span class="text-outline">Trabajo</span><strong class="text-primary">Individual</strong></div>
+              <div class="flex justify-between py-2 border-b border-border-subtle"><span class="text-outline">Duración</span><strong class="text-primary">20 h</strong></div>
+              <div class="flex justify-between py-2 border-b border-border-subtle"><span class="text-outline">Ritmo</span><strong class="text-primary">5 h / semana</strong></div>
+              <div class="flex justify-between py-2"><span class="text-outline">Nivel previo</span><strong class="text-primary">Conceptual, no consolidado</strong></div>
+            </div>
+          </div>
+
+          <div class="bg-surface-container-lowest rounded-xl p-space-md border border-border-subtle">
+            <h3 class="mono text-xs font-semibold text-primary uppercase tracking-wider">Reglas</h3>
+            <ol class="mt-3 space-y-2 text-sm text-on-surface-variant">
+              <li><span class="mono text-secondary mr-1">01</span> No copiar sin comprender.</li>
+              <li><span class="mono text-secondary mr-1">02</span> No avanzar con errores ocultos.</li>
+              <li><span class="mono text-secondary mr-1">03</span> Javadoc en cada clase estudiada.</li>
+              <li><span class="mono text-secondary mr-1">04</span> Cada concepto nuevo va a GLOSARIO.md.</li>
+              <li><span class="mono text-secondary mr-1">05</span> Debes poder explicar tu propio código.</li>
+              <li><span class="mono text-secondary mr-1">06</span> No trabajes directamente sobre <code>main</code>.</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Checklist interactivo
+    const items = document.querySelectorAll('.checklist-item');
+    const counter = document.getElementById('checklist-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    function updateChecklist() {
+      const total = items.length;
+      const checked = [...items].filter(i => i.checked).length;
+      const pct = total ? Math.round((checked / total) * 100) : 0;
+
+      counter.textContent = `${checked} / ${total}`;
+      progressBar.style.width = `${pct}%`;
+      progressText.textContent = `${pct}%`;
+
+      items.forEach(input => {
+        const row = input.closest('label');
+        const title = row.querySelector('.font-medium');
+        const status = row.querySelector('.status');
+
+        if (input.checked) {
+          title.classList.add('line-through', 'opacity-60');
+          status.textContent = 'Cumplido';
+          status.className = 'status mono text-[10px] text-success-emerald bg-success-emerald/10 px-2 py-1 rounded';
+        } else {
+          title.classList.remove('line-through', 'opacity-60');
+          status.textContent = 'Pendiente';
+          status.className = 'status mono text-[10px] text-outline bg-surface-subtle px-2 py-1 rounded';
+        }
+      });
+    }
+
+    items.forEach(item => item.addEventListener('change', updateChecklist));
+    updateChecklist();
+  </script>
+</body>
+</html>
