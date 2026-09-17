@@ -1,0 +1,17 @@
+# Netlify configuration for the PooDoc Angular SPA.
+# Deploy from GitHub: build with npm run build, publish the browser bundle.
+
+[build]
+  command = "npm run build"
+  publish = "dist/PooDoc/browser"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback: serve index.html for deep links (e.g. /semana-1, /glosario).
+# Real files (assets, chunks) keep being served normally because Netlify
+# evaluates redirects only when no static file matches first.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
