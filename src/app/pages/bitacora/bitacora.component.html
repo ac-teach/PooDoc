@@ -1,0 +1,33 @@
+<section
+  id="bitacora"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="material-symbols-outlined text-secondary-container">edit_note</span>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">
+        Análisis de Componentes (COMPONENTES.md)
+      </h2>
+      <p class="mt-1 text-sm text-outline">Registro individual de cada clase estudiada.</p>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg border border-border-subtle">
+    <table class="w-full text-sm">
+      <thead class="bg-surface-subtle">
+        <tr class="text-left mono text-[11px] text-primary">
+          <th class="p-3">Campo</th>
+          <th class="p-3">Qué registrar</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border-subtle">
+        @for (row of rows; track row.field) {
+          <tr>
+            <td class="p-3 font-medium">{{ row.field }}</td>
+            <td class="p-3 text-on-surface-variant">{{ row.value }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

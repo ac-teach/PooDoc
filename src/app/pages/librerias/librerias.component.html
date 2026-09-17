@@ -1,0 +1,100 @@
+<section
+  id="config-librerias"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-5 flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-primary font-bold text-white"
+    >
+      02
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">
+        Configuración del Proyecto con Librerías
+      </h2>
+      <p class="mt-1 text-sm text-outline">Gestión manual de dependencias (.jar)</p>
+    </div>
+  </div>
+
+  <p class="mb-4 text-sm leading-6 text-on-surface-variant">
+    En esta modalidad de trabajo, la gestión de dependencias externas (Driver JDBC de MySQL y SDK de
+    JavaFX) se realiza incorporando físicamente los archivos binarios
+    <code>.jar</code> en el directorio del proyecto y configurándolos manualmente en el IDE y en las
+    instrucciones de compilación/ejecución.
+  </p>
+
+  <div class="space-y-4">
+    <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+      <h3 class="flex items-center gap-2 font-semibold text-primary">
+        <span class="material-symbols-outlined text-[18px]">folder_zip</span>
+        Estructura física del directorio `lib/`
+      </h3>
+      <p class="mt-1 text-sm text-on-surface-variant">
+        Crea una carpeta llamada <code>lib</code> en la raíz del proyecto e incluye los siguientes
+        conectores y módulos:
+      </p>
+      <pre
+        class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+      ><code>LibraryApp/
+├── lib/
+│   ├── mysql-connector-j-8.3.0.jar    # Driver JDBC de MySQL
+│   ├── javafx.base.jar                # JavaFX Base Module
+│   ├── javafx.controls.jar            # JavaFX UI Controls
+│   ├── javafx.fxml.jar                # JavaFX FXML Loader
+│   ├── javafx.graphics.jar            # JavaFX Graphics
+│   ├── javafx.media.jar               # JavaFX Medios
+│   ├── javafx.swing.jar               # JavaFX Componentes Swing
+│   └── javafx.web.jar                 # JavaFX Elementos Web
+├── src/                               # Código fuente Java (.java)
+└── bin/                               # Bytecode compilado (.class)</code></pre>
+    </div>
+
+    <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+      <h3 class="flex items-center gap-2 font-semibold text-primary">
+        <span class="material-symbols-outlined text-[18px]">settings</span>
+        Instrucciones de configuración en IDEs principales
+      </h3>
+
+      <div class="mt-3 space-y-3 text-sm text-on-surface-variant">
+        <div class="rounded-lg border border-border-subtle bg-white p-3">
+          <strong class="mb-1 block text-primary">En NetBeans IDE:</strong>
+          1. Clic derecho en el proyecto &gt; <strong>Properties</strong> &gt;
+          <strong>Libraries</strong>.<br />
+          2. En la pestaña <strong>Classpath</strong>, haz clic en
+          <strong>Add JAR/Folder</strong>.<br />
+          3. Navega a la carpeta <code>lib/</code>, selecciona todos los archivos
+          <code>.jar</code> y presiona <strong>Open</strong>.<br />
+          4. En la pestaña <strong>Run</strong>, añade los VM Options para JavaFX:
+          <code
+            class="mt-1 block rounded bg-surface-subtle p-2 text-xs"
+            >--module-path "C:\javafx-sdk-21.0.11\lib" --add-modules
+            javafx.controls,javafx.fxml</code
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-xl bg-primary p-4 text-white">
+      <h3 class="flex items-center gap-2 font-semibold">
+        <span class="material-symbols-outlined text-secondary-container">terminal</span>
+        Compilación y Ejecución manual por Línea de Comandos (CLI) si es necesario
+      </h3>
+      <p class="mt-1 text-sm text-inverse-on-surface">
+        Si compilas directamente desde la terminal, utiliza las siguientes instrucciones
+        especificando el classpath y los módulos de JavaFX:
+      </p>
+
+      <div class="mt-3 space-y-2">
+        <span class="mono block text-xs text-primary-fixed-dim">1. Compilación:</span>
+        <pre
+          class="overflow-x-auto rounded-lg bg-code-canvas p-3 text-xs text-inverse-on-surface"
+        ><code>javac -cp "lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml -d bin src/org/ac/model/*.java src/org/ac/dao/*.java src/org/ac/controller/*.java</code></pre>
+
+        <span class="mono mt-2 block text-xs text-primary-fixed-dim">2. Ejecución:</span>
+        <pre
+          class="overflow-x-auto rounded-lg bg-code-canvas p-3 text-xs text-inverse-on-surface"
+        ><code>java -cp "bin:lib/*" --module-path lib --add-modules javafx.controls,javafx.fxml org.ac.Main</code></pre>
+      </div>
+    </div>
+  </div>
+</section>

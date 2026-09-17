@@ -1,0 +1,115 @@
+<!-- HERO -->
+<section
+  class="relative overflow-hidden rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="absolute top-0 bottom-0 left-0 w-1.5 bg-secondary-container"></div>
+  <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-2">
+      <span
+        class="mono rounded-full bg-secondary-fixed px-2.5 py-1 text-xs font-semibold text-secondary"
+        >ACTIVIDAD INDIVIDUAL</span
+      >
+      <span class="mono text-[11px] text-outline">•</span>
+      <span class="mono text-[11px] text-outline">Programación 1</span>
+    </div>
+    <span
+      class="mono flex items-center gap-1.5 rounded-full bg-secondary-container/10 px-2.5 py-1 text-[11px] text-secondary"
+    >
+      <span class="h-2 w-2 rounded-full bg-secondary-container"></span> 20 horas efectivas
+    </span>
+  </div>
+
+  <h1 class="mb-3 text-4xl font-bold tracking-tight text-primary">
+    Reconstrucción profesional de LibraryApp
+  </h1>
+  <p class="max-w-4xl text-lg leading-7 text-on-surface-variant">
+    Aprende a leer, analizar, documentar y reconstruir una aplicación JavaFX utilizando
+    <strong class="text-primary">MVC + DAO + MySQL + JDBC + FXML + SceneBuilder</strong>. El
+    proyecto terminado es una referencia de ingeniería: tu objetivo no es copiarlo, sino descubrir
+    cómo está construido y reproducir su arquitectura paso a paso.
+  </p>
+
+  <div
+    class="mt-4 rounded-lg border border-border-subtle bg-surface-subtle p-4 text-sm text-on-surface-variant"
+  >
+    <strong class="mb-2 flex items-center gap-2 text-primary"
+      ><span class="material-symbols-outlined text-[18px]">account_tree</span> Clases base del
+      Proyecto LibraryApp:</strong
+    >
+    Para este taller, el proyecto de referencia se compone de las siguientes clases e interfaces. Tu
+    tarea será estudiarlas, documentarlas y reconstruirlas:
+    <ul class="mt-2 grid grid-cols-2 gap-2 font-mono text-[11px] sm:grid-cols-3">
+      @for (cls of baseClasses; track cls.name) {
+        <li class="rounded border border-border-subtle bg-white p-2 text-primary">{{ cls.name }}</li>
+      }
+    </ul>
+  </div>
+
+  <div class="mt-5 flex flex-wrap gap-2 border-t border-border-subtle pt-4">
+    <span
+      class="mono rounded-full border border-border-subtle bg-surface-subtle px-3 py-1 text-[11px] text-primary"
+      >Nivel: Inicial / Intermedio</span
+    >
+    <span
+      class="mono rounded-full border border-border-subtle bg-surface-subtle px-3 py-1 text-[11px] text-primary"
+      >JavaFX 21</span
+    >
+    <span
+      class="mono rounded-full border border-border-subtle bg-surface-subtle px-3 py-1 text-[11px] text-primary"
+      >MySQL Workbench</span
+    >
+    <span
+      class="mono rounded-full border border-secondary-container/30 bg-secondary-container/10 px-3 py-1 text-[11px] text-secondary"
+      >Javadoc + Glosario</span
+    >
+  </div>
+</section>
+
+<!-- WHAT / WHY -->
+<section class="grid gap-space-md md:grid-cols-2">
+  <div class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg">
+    <div class="mb-3 flex items-center gap-2">
+      <div
+        class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary"
+      >
+        <span class="material-symbols-outlined">flag</span>
+      </div>
+      <h2 class="text-xl font-semibold text-primary">Propósito</h2>
+    </div>
+    <p class="text-sm leading-6 text-on-surface-variant">
+      Comprender cómo se organiza una aplicación profesional antes de escribirla. Al finalizar,
+      podrás explicar el recorrido de un dato desde la interfaz hasta MySQL y construir un flujo
+      CRUD con responsabilidades separadas.
+    </p>
+  </div>
+
+  <div class="rounded-xl bg-primary p-space-lg text-surface-container-lowest">
+    <div class="mb-3 flex items-center gap-2">
+      <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary-container">
+        <span class="material-symbols-outlined">engineering</span>
+      </div>
+      <h2 class="text-xl font-semibold">Forma profesional de trabajar</h2>
+    </div>
+    <p class="text-sm leading-6 text-inverse-on-surface">
+      Cada clase sigue el mismo ciclo: <strong>observar → investigar → comprender → dibujar →
+      escribir → documentar → implementar → probar → explicar</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- ALERTA DE NAVEGACIÓN -->
+<nav class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg">
+  <div class="flex items-center gap-2">
+    <div
+      class="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary-container/10 text-secondary"
+    >
+      <span class="material-symbols-outlined">explore</span>
+    </div>
+    <h2 class="text-xl font-semibold text-primary">Explora la guía</h2>
+  </div>
+  <p class="mt-2 text-sm leading-6 text-on-surface-variant">
+    Usa el menú de la izquierda para recorrer cada punto del taller: diagnóstico, configuración de
+    librerías, arquitectura, Git Flow, documentos .md, guía Javadoc, las cuatro semanas de trabajo y
+    los recursos de cierre. Cada punto es una página propia.
+  </p>
+</nav>

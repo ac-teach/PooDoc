@@ -1,0 +1,17 @@
+<app-header></app-header>
+
+<div class="flex min-h-0 flex-1">
+  <app-sidebar></app-sidebar>
+
+  <div class="scrollbar-thin flex-1 overflow-y-auto bg-surface-canvas">
+    <div
+      class="main-grid mx-auto grid max-w-[1500px] grid-cols-[minmax(0,1fr)_360px] gap-space-lg p-margin"
+    >
+      <main class="main-shell max-w-5xl space-y-space-lg">
+        <router-outlet />
+      </main>
+
+      <app-right-dock class="desktop-dock space-y-space-md"></app-right-dock>
+    </div>
+  </div>
+</div>

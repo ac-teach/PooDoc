@@ -1,0 +1,92 @@
+<div class="space-y-space-md">
+  <div
+    class="sticky top-0 rounded-xl border border-border-subtle bg-surface-container-lowest p-space-md shadow-sm"
+  >
+    <div class="mb-3 flex items-center justify-between">
+      <span class="mono text-[11px] font-semibold tracking-wider text-outline uppercase"
+        >Progreso de la ruta</span
+      >
+      <span class="mono text-[11px] font-semibold text-primary">4 semanas</span>
+    </div>
+    <div class="grid grid-cols-4 gap-2">
+      <a
+        [routerLink]="'/' + 'semana-1'"
+        class="rounded-lg bg-surface-subtle p-2 text-center hover:bg-primary/10"
+      >
+        <div class="mono text-[10px] text-outline">S1</div>
+        <div class="text-xs font-medium text-primary">Model</div>
+      </a>
+      <a
+        [routerLink]="'/' + 'semana-2'"
+        class="rounded-lg bg-surface-subtle p-2 text-center hover:bg-primary/10"
+      >
+        <div class="mono text-[10px] text-outline">S2</div>
+        <div class="text-xs font-medium text-primary">DAO</div>
+      </a>
+      <a
+        [routerLink]="'/' + 'semana-3'"
+        class="rounded-lg bg-surface-subtle p-2 text-center hover:bg-primary/10"
+      >
+        <div class="mono text-[10px] text-outline">S3</div>
+        <div class="text-xs font-medium text-primary">MVC</div>
+      </a>
+      <a
+        [routerLink]="'/' + 'semana-4'"
+        class="rounded-lg bg-surface-subtle p-2 text-center hover:bg-primary/10"
+      >
+        <div class="mono text-[10px] text-outline">S4</div>
+        <div class="text-xs font-medium text-primary">Integra</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="rounded-xl bg-primary p-space-md text-white shadow-sm">
+    <div class="mb-2 flex items-center gap-2">
+      <div class="flex h-8 w-8 items-center justify-center rounded-full bg-secondary-container">
+        <span class="material-symbols-outlined text-[18px]">tips_and_updates</span>
+      </div>
+      <div>
+        <span class="mono block text-xs font-semibold">Consejo docente</span>
+        <span class="mono text-[10px] text-primary-fixed-dim">Aprender arquitectura</span>
+      </div>
+    </div>
+    <p
+      class="rounded-lg border border-primary-container bg-primary-container/40 p-3 text-sm leading-relaxed text-inverse-on-surface"
+    >
+      No intentes memorizar una clase completa. Identifica primero su responsabilidad, sus entradas,
+      sus salidas y sus dependencias. Después reconstruye el código.
+    </p>
+  </div>
+
+  <div class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-md">
+    <h3 class="mono text-xs font-semibold tracking-wider text-primary uppercase">Alcance</h3>
+    <div class="mt-3 space-y-2 text-sm">
+      <div class="flex justify-between border-b border-border-subtle py-2">
+        <span class="text-outline">Trabajo</span><strong class="text-primary">Individual</strong>
+      </div>
+      <div class="flex justify-between border-b border-border-subtle py-2">
+        <span class="text-outline">Duración</span><strong class="text-primary">20 h</strong>
+      </div>
+      <div class="flex justify-between border-b border-border-subtle py-2">
+        <span class="text-outline">Ritmo</span><strong class="text-primary">5 h / semana</strong>
+      </div>
+      <div class="flex justify-between py-2">
+        <span class="text-outline">Nivel previo</span
+        ><strong class="text-primary">Conceptual, no consolidado</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-md">
+    <h3 class="mono text-xs font-semibold tracking-wider text-primary uppercase">Reglas</h3>
+    <ol class="mt-3 space-y-2 text-sm text-on-surface-variant">
+      <li><span class="mono mr-1 text-secondary">01</span> No copiar sin comprender.</li>
+      <li><span class="mono mr-1 text-secondary">02</span> No avanzar con errores ocultos.</li>
+      <li><span class="mono mr-1 text-secondary">03</span> Javadoc en cada clase estudiada.</li>
+      <li><span class="mono mr-1 text-secondary">04</span> Cada concepto nuevo va a GLOSARIO.md.</li>
+      <li><span class="mono mr-1 text-secondary">05</span> Debes poder explicar tu propio código.</li>
+      <li><span class="mono mr-1 text-secondary">06</span> No trabajes directamente sobre
+        <code class="text-xs">main</code>.</li>
+    </ol>
+  </div>
+</div>

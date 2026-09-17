@@ -1,0 +1,57 @@
+<header
+  class="flex h-16 w-full items-center justify-between border-b border-border-subtle bg-surface px-gutter shadow-sm sticky top-0 z-50"
+>
+  <div class="flex items-center gap-space-md">
+    <a [routerLink]="'/' + homePath" class="flex items-center gap-space-md">
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-surface-container-lowest shadow-sm"
+      >
+        <span class="material-symbols-outlined text-secondary-container">terminal</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-2xl leading-none font-bold tracking-tight text-primary"
+          >Kinal TechForge</span
+        >
+        <span class="mono mt-1 text-[11px] text-outline"
+          >Programación 1 · Taller de reconstrucción</span
+        >
+      </div>
+    </a>
+    <div class="mx-1 hidden h-6 w-px bg-border-subtle lg:block"></div>
+    <div class="hidden items-center gap-2 lg:flex">
+      <span
+        class="mono rounded-full border border-border-subtle bg-surface-subtle px-2 py-1 text-xs text-primary"
+        >20 HORAS</span
+      >
+      <span class="text-sm text-on-surface-variant">LibraryApp · JavaFX + MVC + DAO</span>
+    </div>
+  </div>
+
+  <nav class="hidden items-center gap-6 xl:flex">
+    @for (item of topNav; track item.path) {
+      <a
+        [routerLink]="'/' + item.path"
+        routerLinkActive="!border-b-2 !border-secondary-container !text-primary font-medium"
+        class="pb-1 text-on-surface-variant transition-colors hover:text-primary"
+        >{{ item.label }}</a
+      >
+    }
+  </nav>
+
+  <div class="flex items-center gap-2">
+    <a
+      [routerLink]="'/' + 'checklist'"
+      class="mono hidden items-center gap-1.5 rounded-lg border border-border-subtle bg-surface-subtle px-3 py-1.5 text-xs text-primary md:flex"
+    >
+      <span class="material-symbols-outlined text-[17px]">checklist</span> Checklist
+    </a>
+    <a
+      [routerLink]="'/' + 'entrega'"
+      routerLinkActive="!bg-secondary-container/80"
+      class="flex items-center gap-1.5 rounded-lg bg-secondary-container px-3.5 py-1.5 font-medium text-surface-container-lowest shadow-sm transition hover:brightness-105"
+    >
+      <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+      <span>Entrega</span>
+    </a>
+  </div>
+</header>

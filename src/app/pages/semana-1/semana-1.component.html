@@ -1,0 +1,166 @@
+<section
+  id="semana1"
+  class="step-card rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-secondary-container font-bold text-white shadow-sm"
+    >
+      1
+    </div>
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span
+            class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+            >SEMANA 1 · 5 HORAS</span
+          >
+          <h2 class="mt-2 text-2xl font-semibold text-primary">
+            Semana 1 · Modelo de Dominio y Configuración Inicial
+          </h2>
+        </div>
+        <span
+          class="mono rounded-full bg-success-emerald/10 px-2 py-1 text-[11px] text-success-emerald"
+          >Base conceptual</span
+        >
+      </div>
+
+      <div
+        class="mt-4 rounded-xl border border-tertiary-fixed-dim bg-tertiary-fixed/20 p-4 text-sm text-on-surface-variant"
+      >
+        <h4
+          class="mb-2 flex items-center gap-2 font-bold text-tertiary-fixed-dim"
+        >
+          <span class="material-symbols-outlined text-[18px]">search</span> Investigación y
+          Documentación Semanal
+        </h4>
+        <p class="mb-2">
+          <strong>Cuestionamiento extra:</strong> ¿Cuál es la diferencia técnica entre un tipo
+          primitivo y una clase envolvente (Wrapper) en Java al manejar datos para el Modelo?
+          <a
+            href="https://docs.oracle.com/javase/tutorial/java/data/numberclasses.html"
+            target="_blank"
+            rel="noreferrer"
+            class="font-medium text-secondary hover:underline"
+            >Leer más (Oracle Docs)</a
+          >
+        </p>
+        <p class="mb-1">
+          <strong>Agregar a GLOSARIO.md:</strong> <code>Clase</code>, <code>Objeto</code>,
+          <code>Encapsulamiento</code>, <code>Tipo Primitivo</code>, <code>Clase Wrapper</code>.
+        </p>
+        <p>
+          <strong>Agregar a COMPONENTES.md:</strong> <code>Libro.java</code>,
+          <code>Autor.java</code>, <code>Categoria.java</code>.
+        </p>
+      </div>
+
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Qué deben tener terminado?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Configuración del proyecto con directorio <code>lib/</code>, resolución del
+            cuestionario diagnóstico completo, implementación de las clases del paquete
+            <code>model</code> y primeras fichas de documentación.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Cuántos de cada qué? (Cantidades)</strong
+          >
+          <div class="package-checklist">
+            @for (item of items; track item.name) {
+              <label>
+                <input type="checkbox" />
+                <span>
+                  <strong>{{ item.name }}</strong
+                  ><br /><span class="text-outline">{{ item.sub }}</span> · {{ item.suffix }}
+                </span>
+              </label>
+            }
+          </div>
+          <p class="mt-2 text-xs text-on-surface-variant">
+            Total: <strong>14/14</strong> archivos Java asignados a Semana 1.
+          </p>
+          <p class="mt-2 text-[11px] text-outline">
+            <strong>Meta de Semana 1:</strong> 14 clases Java terminadas y documentadas: 1 de
+            <code>system</code> + 11 de <code>model</code> + 2 de <code>util</code>.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿De qué manera? (Workflow)</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            En la rama <code>feature/setup-project</code> y <code>feature/model-libro</code>.
+            Registrando commits con formato <code>feat(model): ...</code> y subiendo avances a
+            <code>develop</code> en GitHub.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Con qué calidad y detalle?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Atributos estrictamente <code>private</code>, getters/setters completos, constructores
+            overloaded (vacío y parametrizado), método <code>toString()</code> funcional y 100% de
+            Javadoc en clase y métodos.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">1.1 Reconocer la estructura</h3>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code>src/
+└── org/ac/
+    ├── controller/
+    ├── dao/
+    ├── exception/
+    ├── manager/
+    ├── model/
+    ├── system/
+    ├── util/
+    └── view/
+        └── fxml/</code></pre>
+        </div>
+
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">1.2 Construir Model</h3>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code>public class Libro {{ '{' }}
+    private int idLibro;
+    private String titulo;
+    private String isbn;
+    private double precio;
+
+    // Constructores, Getters/Setters y Javadoc completo
+&#125;</code></pre>
+        </div>
+      </div>
+
+      <div class="git-mini">
+        <h4>Git Flow · pasos de esta semana</h4>
+        <ol class="list-decimal space-y-1 pl-5 text-xs leading-relaxed">
+          @for (step of gitSteps; track $index) {
+            <li>
+              <strong>{{ step.label }}</strong>
+              @for (seg of step.segments; track $index) {
+                @if (seg.c) {
+                  <code>{{ seg.c }}</code>
+                } @else {
+                  <span>{{ seg.t }}</span>
+                }
+              }
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

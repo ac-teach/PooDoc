@@ -1,0 +1,137 @@
+<section
+  id="semana4"
+  class="step-card rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary font-bold text-white"
+    >
+      4
+    </div>
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span
+            class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+            >SEMANA 4 · 5 HORAS</span
+          >
+          <h2 class="mt-2 text-2xl font-semibold text-primary">
+            Semana 4 · Integración, Documentación y Defensa
+          </h2>
+        </div>
+        <span class="mono rounded-full bg-surface-subtle px-2 py-1 text-[11px] text-primary"
+          >Síntesis</span
+        >
+      </div>
+
+      <div
+        class="mt-4 rounded-xl border border-tertiary-fixed-dim bg-tertiary-fixed/20 p-4 text-sm text-on-surface-variant"
+      >
+        <h4 class="mb-2 flex items-center gap-2 font-bold text-tertiary-fixed-dim">
+          <span class="material-symbols-outlined text-[18px]">search</span> Investigación y
+          Documentación Semanal
+        </h4>
+        <p class="mb-2">
+          <strong>Cuestionamiento extra:</strong> ¿Cuáles son las mejores prácticas para el manejo
+          de excepciones y notificaciones en interfaces de usuario para no exponer código interno o
+          StackTraces?
+          <a
+            href="https://docs.oracle.com/javase/tutorial/essential/exceptions/"
+            target="_blank"
+            rel="noreferrer"
+            class="font-medium text-secondary hover:underline"
+            >Leer más (Java Exceptions)</a
+          >
+        </p>
+        <p class="mb-1">
+          <strong>Agregar a GLOSARIO.md:</strong> <code>Excepción</code>,
+          <code>Manejo de Errores</code>, <code>Release</code>, <code>Tag (Git)</code>.
+        </p>
+        <p><strong>Agregar a COMPONENTES.md:</strong> <code>Principal.java</code>.</p>
+      </div>
+
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Qué deben tener terminado?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Integración final del sistema ejecutando localmente, finalización de los 3 documentos
+            .md, y preparación para la defensa individual oral.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Cuántos de cada qué? (Cantidades)</strong
+          >
+          <div class="package-checklist">
+            @for (item of items; track item.name) {
+              <label>
+                <input type="checkbox" />
+                <span>
+                  <strong>{{ item.name }}</strong
+                  ><br /><span class="text-outline">{{ item.sub }}</span> · {{ item.suffix }}
+                </span>
+              </label>
+            }
+          </div>
+          <p class="mt-2 text-xs text-on-surface-variant">
+            Total: <strong>55/55</strong> comprobaciones Java acumuladas. Semana 4 no crea nuevas
+            clases: verifica, corrige y documenta las anteriores.
+          </p>
+          <p class="mt-2 text-[11px] text-outline">
+            <strong>Meta de Semana 4:</strong> cerrar el inventario completo del proyecto y
+            demostrar que todos los paquetes y archivos fueron estudiados, documentados y probados.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿De qué manera? (Workflow)</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Rama <code>feature/docs-glosario</code> a <code>develop</code>, posterior
+            <code>release/1.0.0</code> y merge final a <code>main</code> con tag etiquetado y
+            comando <code>git push --tags</code>.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Con qué calidad y detalle?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Cero errores de compilación local, 100% de cobertura de Javadoc en todo el código,
+            fluidez en la explicación técnica oral sin leer el código.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div class="rounded-xl bg-primary p-4 text-white">
+          <h3 class="font-semibold">4.1 Defensa técnica oral individual</h3>
+          <p class="mt-1 text-sm text-inverse-on-surface">
+            El estudiante defenderá su proyecto respondiendo el flujo de datos desde la interfaz
+            JavaFX hasta el procedimiento en MySQL Workbench.
+          </p>
+        </div>
+      </div>
+
+      <div class="git-mini">
+        <h4>Git Flow · pasos de esta semana</h4>
+        <ol class="list-decimal space-y-1 pl-5 text-xs leading-relaxed">
+          @for (step of gitSteps; track $index) {
+            <li>
+              <strong>{{ step.label }}</strong>
+              @for (seg of step.segments; track $index) {
+                @if (seg.c) {
+                  <code>{{ seg.c }}</code>
+                } @else {
+                  <span>{{ seg.t }}</span>
+                }
+              }
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

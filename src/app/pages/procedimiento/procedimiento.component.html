@@ -1,0 +1,26 @@
+<section
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-4 flex items-center gap-2">
+    <div
+      class="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary-container/10 text-secondary-container"
+    >
+      <span class="material-symbols-outlined">route</span>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">
+        Procedimiento obligatorio para cada clase
+      </h2>
+      <p class="mt-1 text-sm text-outline">Utiliza siempre la misma secuencia profesional.</p>
+    </div>
+  </div>
+
+  <div class="grid gap-2 md:grid-cols-3">
+    @for (step of steps; track step.num) {
+      <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+        <span class="mono text-xs text-secondary">{{ step.num }}</span>
+        <div class="mt-1 font-medium text-primary">{{ step.label }}</div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,150 @@
+<section
+  id="semana3"
+  class="step-card rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary font-bold text-white"
+    >
+      3
+    </div>
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span
+            class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+            >SEMANA 3 · 5 HORAS</span
+          >
+          <h2 class="mt-2 text-2xl font-semibold text-primary">
+            Semana 3 · Interfaz Gráfica con JavaFX, FXML y MVC
+          </h2>
+        </div>
+        <span
+          class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+          >Interfaz</span
+        >
+      </div>
+
+      <div
+        class="mt-4 rounded-xl border border-tertiary-fixed-dim bg-tertiary-fixed/20 p-4 text-sm text-on-surface-variant"
+      >
+        <h4 class="mb-2 flex items-center gap-2 font-bold text-tertiary-fixed-dim">
+          <span class="material-symbols-outlined text-[18px]">search</span> Investigación y
+          Documentación Semanal
+        </h4>
+        <p class="mb-2">
+          <strong>Cuestionamiento extra:</strong> ¿Por qué JavaFX utiliza
+          <code>ObservableList</code> en lugar de las Listas clásicas de Java (ArrayList) para
+          nutrir componentes como el TableView?
+          <a
+            href="https://openjfx.io/javadoc/21/javafx.base/javafx/collections/ObservableList.html"
+            target="_blank"
+            rel="noreferrer"
+            class="font-medium text-secondary hover:underline"
+            >Leer más (OpenJFX Docs)</a
+          >
+        </p>
+        <p class="mb-1">
+          <strong>Agregar a GLOSARIO.md:</strong> <code>FXML</code>, <code>SceneBuilder</code>,
+          <code>Controller</code>, <code>ObservableList</code>, <code>TableView</code>.
+        </p>
+        <p>
+          <strong>Agregar a COMPONENTES.md:</strong> <code>LibroView.fxml</code>,
+          <code>LibroController.java</code>.
+        </p>
+      </div>
+
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Qué deben tener terminado?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Diseño de vistas FXML en SceneBuilder, creación de controladores MVC JavaFX con
+            desacoplamiento total y vinculación de tablas con <code>ObservableList</code>.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Cuántos de cada qué? (Cantidades)</strong
+          >
+          <div class="package-checklist">
+            @for (item of items; track item.name) {
+              <label>
+                <input type="checkbox" />
+                <span>
+                  <strong>{{ item.name }}</strong
+                  ><br /><span class="text-outline">{{ item.sub }}</span> · {{ item.suffix }}
+                </span>
+              </label>
+            }
+          </div>
+          <p class="mt-2 text-xs text-on-surface-variant">
+            Total: <strong>17/17</strong> archivos Java del package <code>controller</code>.
+            Además, se revisan todos los FXML/CSS existentes.
+          </p>
+          <p class="mt-2 text-[11px] text-outline">
+            <strong>Meta de Semana 3:</strong> 17 Controllers Java terminados y todas las vistas
+            FXML/CSS necesarias para probar los módulos asignados.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿De qué manera? (Workflow)</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            En la rama <code>feature/javafx-libro</code>. Vinculación estricta entre
+            <code>fx:id</code> en SceneBuilder y anotaciones <code>@FXML</code> en el Controller.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
+          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
+            >¿Con qué calidad y detalle?</strong
+          >
+          <p class="text-xs text-on-surface-variant">
+            Validación de entrada en campos de texto (no vacíos, conversión numérica segura),
+            diálogos de alerta (<code>Alert</code>) para notificar errores o confirmaciones de
+            usuario.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">3.1 Controller JavaFX</h3>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code>public class LibroController implements Initializable {{ '{' }}
+    @FXML private TableView&lt;Libro&gt; tblLibros;
+    @FXML private TextField txtTitulo;
+    
+    private LibroDAO libroDAO = new LibroDAOImpl();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {{ '{' }}
+        // Cargar datos en TableView
+    &#125;
+&#125;</code></pre>
+        </div>
+      </div>
+
+      <div class="git-mini">
+        <h4>Git Flow · pasos de esta semana</h4>
+        <ol class="list-decimal space-y-1 pl-5 text-xs leading-relaxed">
+          @for (step of gitSteps; track $index) {
+            <li>
+              <strong>{{ step.label }}</strong>
+              @for (seg of step.segments; track $index) {
+                @if (seg.c) {
+                  <code>{{ seg.c }}</code>
+                } @else {
+                  <span>{{ seg.t }}</span>
+                }
+              }
+            </li>
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

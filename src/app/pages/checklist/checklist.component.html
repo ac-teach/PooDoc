@@ -1,0 +1,64 @@
+<section
+  id="checklist"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-4 flex items-center justify-between gap-3 border-b border-border-subtle pb-3">
+    <div class="flex items-center gap-3">
+      <div
+        class="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary-container/10 text-secondary-container"
+      >
+        <span class="material-symbols-outlined">checklist</span>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold text-primary">Checklist de autoevaluación</h2>
+        <p class="text-sm text-outline">Marca cada elemento cuando puedas demostrarlo.</p>
+      </div>
+    </div>
+    <span
+      class="mono rounded-full border border-border-subtle bg-surface-subtle px-2.5 py-1 text-[11px] font-semibold text-primary"
+      >{{ doneCount() }} / {{ items.length }}</span
+    >
+  </div>
+
+  <div
+    class="mb-4 h-2 overflow-hidden rounded-full border border-border-subtle bg-surface-subtle"
+  >
+    <div
+      class="h-full rounded-full bg-secondary-container transition-all duration-200"
+      [style.width.%]="progress()"
+    ></div>
+  </div>
+
+  <div class="space-y-2">
+    @for (item of items; track item.title; let i = $index) {
+      <label
+        class="flex cursor-pointer items-start gap-3 rounded-lg border border-border-subtle p-3 hover:bg-surface-subtle"
+      >
+        <input
+          class="mt-1 h-4 w-4"
+          type="checkbox"
+          [checked]="checked()[i]"
+          (change)="toggle(i)"
+        />
+        <div class="flex-1">
+          <span
+            [class.line-through]="checked()[i]"
+            [class.opacity-60]="checked()[i]"
+            class="font-medium text-primary"
+            >{{ item.title }}</span
+          >
+          <p class="mt-1 text-xs text-on-surface-variant">{{ item.description }}</p>
+        </div>
+        @if (checked()[i]) {
+          <span class="mono rounded bg-success-emerald/10 px-2 py-1 text-[10px] text-success-emerald"
+            >Cumplido</span
+          >
+        } @else {
+          <span class="mono rounded bg-surface-subtle px-2 py-1 text-[10px] text-outline"
+            >Pendiente</span
+          >
+        }
+      </label>
+    }
+  </div>
+</section>

@@ -1,0 +1,97 @@
+<aside
+  class="left-nav sticky top-16 flex h-[calc(100vh-4rem)] w-72 flex-shrink-0 flex-col justify-between border-r border-border-subtle bg-surface"
+>
+  <div class="scrollbar-thin overflow-y-auto p-space-md">
+    <div
+      class="mb-space-md flex items-start gap-space-sm border-b border-border-subtle pb-space-md"
+    >
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-primary"
+      >
+        <span class="material-symbols-outlined">school</span>
+      </div>
+      <div>
+        <h2 class="text-xl leading-tight font-semibold text-primary">Guía del estudiante</h2>
+        <p class="mono mt-1 text-[11px] text-outline">Reconstrucción profesional</p>
+      </div>
+    </div>
+
+    @for (group of navGroups; track group.title) {
+      <div class="mb-4">
+        <div
+          class="mono mb-1 px-2 text-[11px] tracking-wider text-outline uppercase"
+        >
+          {{ group.title }}
+        </div>
+        <div class="space-y-1.5">
+          @for (item of group.items; track item.path) {
+            <a
+              [routerLink]="'/' + item.path"
+              routerLinkActive="!bg-surface-container !text-primary"
+              class="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-on-surface-variant transition-colors hover:bg-surface-subtle"
+            >
+              @if (item.badge) {
+                <span
+                  class="flex h-6 w-6 items-center justify-center rounded-full bg-surface-container mono text-xs"
+                  >{{ item.badge }}</span
+                >
+              } @else {
+                <span class="material-symbols-outlined text-[18px]">{{ item.icon }}</span>
+              }
+              <span class="mono text-xs">{{ item.label }}</span>
+            </a>
+          }
+        </div>
+      </div>
+    }
+
+    <div
+      class="mt-space-lg rounded-lg border border-border-subtle bg-surface-container-low p-space-sm"
+    >
+      <div class="mb-1.5 flex items-center justify-between">
+        <span class="mono text-[11px] font-semibold text-primary">Recursos</span>
+        <span class="mono text-[11px] text-secondary">externo</span>
+      </div>
+      <div class="space-y-1.5 text-xs">
+        <a
+          class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"
+          href="https://github.com/ac-teach/LibraryApp"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span class="material-symbols-outlined text-[15px]">code</span> LibraryApp
+        </a>
+        <a
+          class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"
+          [routerLink]="'/' + 'glosario'"
+        >
+          <span class="material-symbols-outlined text-[15px]">menu_book</span> Glosario paralelo
+        </a>
+        <a
+          class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"
+          [routerLink]="'/' + 'bitacora'"
+        >
+          <span class="material-symbols-outlined text-[15px]">edit_note</span> Bitácora
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-border-subtle bg-surface-container-lowest/70 p-space-md">
+    <div class="rounded-xl bg-primary p-space-md text-surface-container-lowest">
+      <div class="mb-2 flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-secondary-container">
+          <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+        </div>
+        <div>
+          <span class="mono block text-xs font-semibold">Regla de trabajo</span>
+          <span class="mono text-[10px] text-primary-fixed-dim">Comprender → construir</span>
+        </div>
+      </div>
+      <p class="text-xs leading-relaxed text-inverse-on-surface">
+        No avances por cantidad de código. Avanza cuando puedas explicar qué responsabilidad tiene
+        cada pieza y cómo se relaciona con las demás.
+      </p>
+    </div>
+  </div>
+</aside>

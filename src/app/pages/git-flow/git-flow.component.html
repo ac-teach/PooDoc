@@ -1,0 +1,122 @@
+<section
+  id="gitflow"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-secondary-container font-bold text-white"
+    >
+      03
+    </div>
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <span
+            class="mono rounded-full bg-secondary-fixed px-2.5 py-1 text-[11px] text-secondary"
+            >CONTROL DE VERSIONES Y SETUP LOCAL</span
+          >
+          <h2 class="mt-2 text-2xl font-semibold text-primary">
+            Git Flow y Configuración de Repositorio con GitHub CLI
+          </h2>
+        </div>
+        <span class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+          >obligatorio</span
+        >
+      </div>
+
+      <p class="mt-4 text-sm leading-6 text-on-surface-variant">
+        El repositorio de LibraryApp no será solamente un lugar donde almacenar el código terminado.
+        Durante esta actividad Git debe registrar
+        <strong class="text-primary">cómo construyes el proyecto</strong> desde cero, usando
+        herramientas locales y conectando a GitHub.
+      </p>
+
+      <div class="mt-5 rounded-xl bg-primary p-4 text-white">
+        <div class="mono mb-2 text-[11px] text-primary-fixed-dim">MODELO DE RAMAS</div>
+        <pre class="overflow-x-auto text-xs leading-relaxed text-inverse-on-surface"><code>main
+  │
+  └── develop
+       ├── feature/setup-project
+       ├── feature/model-libro
+       ├── feature/dao-libro
+       ├── feature/javafx-libro
+       ├── feature/docs-glosario
+       └── feature/documentacion
+
+release/1.0.0 → main
+hotfix/1.0.1   → main + develop</code></pre>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">3.1 Inicializar Proyecto Independiente</h3>
+          <p class="mt-1 text-sm text-on-surface-variant">
+            Construirás tu propia versión del sistema desde cero. Empieza creando tu carpeta y
+            configurando Git de manera local.
+          </p>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code># Crea la carpeta del proyecto
+mkdir LibraryApp_NombreApellido
+
+# Entra a la carpeta
+cd LibraryApp_NombreApellido
+
+# Inicializa el control de versiones vacío
+git init</code></pre>
+        </div>
+
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">
+            3.2 Crear y vincular repositorio en GitHub con GitHub CLI
+          </h3>
+          <p class="mt-1 text-sm text-on-surface-variant">
+            Utiliza <code>gh</code> (GitHub CLI) para crear el proyecto remoto en tu cuenta y
+            enlazado automáticamente a tu directorio de trabajo local.
+          </p>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code># Crea el repositorio privado en tu GitHub indicando como fuente el directorio actual (.)
+gh repo create LibraryApp_NombreApellido --private --source=. --remote=origin</code></pre>
+          <div
+            class="mt-3 rounded-lg border border-border-subtle bg-white p-3 text-sm text-on-surface-variant"
+          >
+            <strong class="mb-1 block text-primary">¿Qué hace este comando?</strong>
+            Genera el repositorio vacío en la nube, agrega el <code>remote</code> llamado
+            <strong>origin</strong> a tu Git local, y te permite hacer <code>push</code> en los
+            siguientes pasos sin tener que usar el navegador.
+          </div>
+        </div>
+
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">3.3 Inicializar Git Flow</h3>
+          <p class="mt-1 text-sm text-on-surface-variant">
+            Una vez vinculado, inicializa la estructura de ramas. Deja todas las opciones por
+            defecto (presionando Enter).
+          </p>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code># Crea las ramas base (main y develop) y configura los prefijos
+git flow init
+
+# Verifica que te encuentras en develop
+git status</code></pre>
+        </div>
+
+        <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+          <h3 class="font-semibold text-primary">3.4 Convención de commits</h3>
+          <p class="mt-1 text-sm text-on-surface-variant">
+            El mensaje debe explicar qué cambió y, de ser posible, en qué capa ocurrió.
+          </p>
+          <pre
+            class="mt-3 overflow-x-auto rounded-lg bg-code-canvas p-4 text-xs text-inverse-on-surface"
+          ><code>feat(model): agregar clase Libro
+feat(dao): implementar LibroDAO
+feat(ui): crear formulario de libros
+docs(javadoc): documentar LibroDAOImpl
+docs(glosario): agregar concepto JDBC</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

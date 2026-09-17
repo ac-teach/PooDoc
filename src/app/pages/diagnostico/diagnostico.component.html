@@ -1,0 +1,46 @@
+<section
+  id="diagnostico"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-5 flex items-start gap-3">
+    <div
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-container font-bold text-white"
+    >
+      01
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">Cuestionario diagnóstico</h2>
+      <p class="mt-1 text-sm text-outline">
+        Responde antes de construir. El diagnóstico detecta qué necesitas repasar.
+      </p>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    @for (group of groups; track group.summary) {
+      <details class="rounded-lg border border-border-subtle bg-surface-subtle/50 p-3">
+        <summary class="cursor-pointer font-medium text-primary">{{ group.summary }}</summary>
+        <div class="mt-3 grid gap-2 text-sm text-on-surface-variant sm:grid-cols-2">
+          @for (question of group.questions; track $index) {
+            <div>
+              @for (seg of question.segments; track $index) {
+                @if (seg.c) {
+                  <code>{{ seg.c }}</code>
+                } @else {
+                  <span>{{ seg.t }}</span>
+                }
+              }
+            </div>
+          }
+        </div>
+      </details>
+    }
+  </div>
+
+  <div
+    class="mt-4 rounded-r-lg border-l-4 border-secondary-container bg-secondary-fixed/50 p-3 text-sm"
+  >
+    <strong class="text-primary">Importante:</strong> no busques respuestas para “pasar” el
+    diagnóstico. El resultado se utiliza para decidir qué conceptos debes repasar antes de avanzar.
+  </div>
+</section>

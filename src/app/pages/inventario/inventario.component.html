@@ -1,0 +1,32 @@
+<section
+  id="inventario-paquetes"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-4 flex items-center gap-2">
+    <span class="material-symbols-outlined text-secondary-container">inventory_2</span>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">Inventario completo de paquetes</h2>
+      <p class="mt-1 text-sm text-outline">
+        Este es el mapa que debes completar durante las cuatro semanas. Cada casilla representa un
+        archivo real del proyecto.
+      </p>
+      <p class="mt-2 text-[11px] text-outline">
+        <strong>Fuente de los nombres:</strong> inventario basado en la estructura visible del
+        repositorio LibraryApp. El package <code>dao/impl</code> se organiza alrededor de los DAO
+        concretos; <code>Crud.java</code> y <code>Dao.java</code> son contratos base y no tienen una
+        implementación independiente.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    @for (pkg of packages; track pkg.title) {
+      <div
+        class="rounded-lg border border-border-subtle bg-surface-subtle p-4 {{ pkg.span ? 'md:col-span-2' : '' }}"
+      >
+        <h3 class="font-semibold text-primary">{{ pkg.title }}</h3>
+        <p class="mt-1 text-xs text-on-surface-variant">{{ pkg.text }}</p>
+      </div>
+    }
+  </div>
+</section>

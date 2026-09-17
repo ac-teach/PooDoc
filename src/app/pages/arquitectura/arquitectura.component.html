@@ -1,0 +1,78 @@
+<section
+  id="ruta"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-5 flex items-center justify-between gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">Mapa de arquitectura</h2>
+      <p class="mt-1 text-sm text-outline">
+        Aprende la responsabilidad de cada capa antes de memorizar código.
+      </p>
+    </div>
+    <span
+      class="mono rounded-full border border-border-subtle bg-surface-subtle px-2 py-1 text-[11px] text-primary"
+      >MVC + DAO</span
+    >
+  </div>
+
+  <div class="grid items-stretch gap-2 md:grid-cols-5">
+    <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3 text-center">
+      <span class="material-symbols-outlined text-primary">person</span>
+      <div class="mt-1 font-medium text-primary">Usuario</div>
+      <div class="mono mt-1 text-[10px] text-outline">interacción</div>
+    </div>
+    <div class="hidden items-center justify-center text-secondary-container md:flex">
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </div>
+    <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3 text-center">
+      <span class="material-symbols-outlined text-primary">web</span>
+      <div class="mt-1 font-medium text-primary">Vista</div>
+      <div class="mono mt-1 text-[10px] text-outline">FXML + SceneBuilder</div>
+    </div>
+    <div class="hidden items-center justify-center text-secondary-container md:flex">
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </div>
+    <div
+      class="rounded-lg border border-secondary-container/30 bg-secondary-container/10 p-3 text-center"
+    >
+      <span class="material-symbols-outlined text-secondary">code</span>
+      <div class="mt-1 font-medium text-primary">Controller</div>
+      <div class="mono mt-1 text-[10px] text-outline">eventos + coordinación</div>
+    </div>
+  </div>
+
+  <div class="my-3 text-center text-outline">
+    <span class="material-symbols-outlined">south</span>
+  </div>
+
+  <div class="grid gap-3 md:grid-cols-3">
+    <div class="rounded-lg bg-primary p-4 text-white">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary-container">dataset</span>
+        <strong>Model</strong>
+      </div>
+      <p class="mt-2 text-sm text-inverse-on-surface">Representa los objetos y datos del dominio.</p>
+    </div>
+    <div class="rounded-lg border border-border-subtle bg-surface-subtle p-4">
+      <div class="flex items-center gap-2 text-primary">
+        <span class="material-symbols-outlined">swap_horiz</span>
+        <strong>DAO</strong>
+      </div>
+      <p class="mt-2 text-sm text-on-surface-variant">Define el contrato para acceder a los datos.</p>
+    </div>
+    <div class="rounded-lg bg-code-canvas p-4 text-white">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-tertiary-fixed-dim">database</span>
+        <strong>MySQL</strong>
+      </div>
+      <p class="mt-2 text-sm text-slate-300">Persistencia: tablas, relaciones y procedimientos.</p>
+    </div>
+  </div>
+
+  <div class="mt-4 rounded-lg bg-surface-subtle p-3 text-sm text-on-surface-variant">
+    <strong class="text-primary">Pregunta profesional:</strong>
+    ¿qué ocurriría si el Controller contuviera FXML, SQL, conexión, validaciones y reglas de negocio
+    en una sola clase? Investiga <strong>separación de responsabilidades</strong>,
+    <strong>acoplamiento</strong> y <strong>cohesión</strong>.
+  </div>
+</section>

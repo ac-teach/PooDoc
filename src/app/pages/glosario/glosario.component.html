@@ -1,0 +1,23 @@
+<section
+  id="glosario"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">Glosario paralelo (GLOSARIO.md)</h2>
+      <p class="mt-1 text-sm text-outline">El glosario crece junto con el proyecto.</p>
+    </div>
+    <span
+      class="mono rounded-full bg-secondary-fixed px-2 py-1 text-[11px] text-secondary"
+      >mínimo 25 conceptos</span
+    >
+  </div>
+
+  <div class="grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+    @for (concept of concepts; track concept) {
+      <span class="mono rounded-lg border border-border-subtle bg-surface-subtle p-2.5 text-xs">{{
+        concept
+      }}</span>
+    }
+  </div>
+</section>

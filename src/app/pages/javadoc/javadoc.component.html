@@ -1,0 +1,86 @@
+<section
+  id="javadoc-guia"
+  class="rounded-xl border border-border-subtle bg-surface-container-lowest p-space-lg shadow-sm"
+>
+  <div class="mb-5 flex items-center gap-3">
+    <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white">
+      <span class="material-symbols-outlined">menu_book</span>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold text-primary">
+        Guía Javadoc: Etiquetas Principales y Ejemplos Prácticos
+      </h2>
+      <p class="mt-1 text-sm text-outline">
+        Estándar profesional de documentación formal dentro del código Java.
+      </p>
+    </div>
+  </div>
+
+  <p class="mb-4 text-sm leading-6 text-on-surface-variant">
+    Javadoc es la herramienta estándar para generar documentación en formato HTML directamente desde
+    los comentarios del código fuente. Todo el código reconstruido en LibraryApp debe incluir
+    Javadoc en nivel de clase, interfaz, atributos y métodos públicos.
+  </p>
+
+  <div class="space-y-4">
+    <div class="overflow-x-auto rounded-lg border border-border-subtle">
+      <table class="w-full text-sm">
+        <thead class="bg-surface-subtle">
+          <tr class="text-left mono text-[11px] text-primary">
+            <th class="p-3">Etiqueta Javadoc</th>
+            <th class="p-3">Aplica a</th>
+            <th class="p-3">Descripción / Propósito</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border-subtle text-xs text-on-surface-variant">
+          @for (row of rows; track row.tag) {
+            <tr>
+              <td class="p-3 mono font-semibold text-primary">{{ row.tag }}</td>
+              <td class="p-3">{{ row.appliesTo }}</td>
+              <td class="p-3">{{ row.description }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rounded-xl bg-code-canvas p-4 text-inverse-on-surface">
+      <div class="mono mb-2 text-xs text-tertiary-fixed-dim">
+        // EJEMPLO PRÁCTICO DE JAVADOC PROFESIONAL
+      </div>
+      <pre class="overflow-x-auto text-xs leading-relaxed"><code>package org.ac.dao;
+
+import org.ac.model.Libro;
+import java.util.List;
+
+/**
+ * Contrato DAO que define las operaciones de persistencia CRUD
+ * para la entidad {{ '{' }}@link Libro&#125; dentro del sistema LibraryApp.
+ * 
+ * @author Nombre del Estudiante
+ * @version 1.0.0
+ * @see org.ac.model.Libro
+ */
+public interface LibroDAO {{ '{' }}
+
+    /**
+     * Registra un nuevo libro en la base de datos MySQL mediante un procedimiento almacenado.
+     * 
+     * @param libro Objeto {{ '{' }}@link Libro&#125; que contiene los datos a registrar. No debe ser null.
+     * @return {{ '{' }}@code true&#125; si la inserción fue exitosa; {{ '{' }}@code false&#125; en caso contrario.
+     * @throws IllegalArgumentException si el parámetro libro contiene datos inválidos o vacíos.
+     * @throws RuntimeException si ocurre un error de conexión con JDBC o la base de datos.
+     */
+    boolean insertar(Libro libro);
+
+    /**
+     * Recupera el listado completo de libros registrados en la librería.
+     * 
+     * @return Una lista de tipo {{ '{' }}@link List&#125; que contiene los objetos {{ '{' }}@link Libro&#125;.
+     *         Retorna una lista vacía si no existen registros en la base de datos.
+     */
+    List&lt;Libro&gt; listar();
+&#125;</code></pre>
+    </div>
+  </div>
+</section>
