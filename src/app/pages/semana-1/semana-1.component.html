@@ -67,27 +67,39 @@
           </p>
         </div>
         <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
-          <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"
-            >¿Cuántos de cada qué? (Cantidades)</strong
+          <button
+            type="button"
+            (click)="showCantidades.set(!showCantidades())"
+            class="flex w-full items-center justify-between gap-2 text-left"
           >
-          <div class="package-checklist">
-            @for (item of items; track item.name) {
-              <label>
-                <input type="checkbox" />
-                <span>
-                  <strong>{{ item.name }}</strong
-                  ><br /><span class="text-outline">{{ item.sub }}</span> · {{ item.suffix }}
-                </span>
-              </label>
-            }
-          </div>
-          <p class="mt-2 text-xs text-on-surface-variant">
-            Total: <strong>14/14</strong> archivos Java asignados a Semana 1.
-          </p>
-          <p class="mt-2 text-[11px] text-outline">
-            <strong>Meta de Semana 1:</strong> 14 clases Java terminadas y documentadas: 1 de
-            <code>system</code> + 11 de <code>model</code> + 2 de <code>util</code>.
-          </p>
+            <strong class="text-xs uppercase tracking-wider text-primary"
+              >¿Cuántos de cada qué? (Cantidades)</strong
+            >
+            <span class="material-symbols-outlined text-[18px] text-primary">{{
+              showCantidades() ? 'expand_less' : 'expand_more'
+            }}</span>
+          </button>
+
+          @if (showCantidades()) {
+            <div class="package-checklist">
+              @for (item of items; track item.name) {
+                <label>
+                  <input type="checkbox" />
+                  <span>
+                    <strong>{{ item.name }}</strong
+                    ><br /><span class="text-outline">{{ item.sub }}</span> · {{ item.suffix }}
+                  </span>
+                </label>
+              }
+            </div>
+            <p class="mt-2 text-xs text-on-surface-variant">
+              Total: <strong>14/14</strong> archivos Java asignados a Semana 1.
+            </p>
+            <p class="mt-2 text-[11px] text-outline">
+              <strong>Meta de Semana 1:</strong> 14 clases Java terminadas y documentadas: 1 de
+              <code>system</code> + 11 de <code>model</code> + 2 de <code>util</code>.
+            </p>
+          }
         </div>
         <div class="rounded-lg border border-border-subtle bg-surface-subtle p-3">
           <strong class="mb-1 block text-xs uppercase tracking-wider text-primary"

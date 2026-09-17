@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 interface Segment {
   t?: string;
@@ -31,6 +31,9 @@ function step(label: string, ...segments: Segment[]): GitStep {
   styleUrl: './semana-3.component.scss',
 })
 export class Semana3Component {
+  /** Collapsible toggle para la sección "¿Cuántos de cada qué? (Cantidades)". */
+  protected readonly showCantidades = signal(true);
+
   protected readonly items: PackageItem[] = [
     { name: 'AdminDashboradController.java', sub: 'package controller', suffix: 'terminar + Javadoc + prueba' },
     { name: 'AutorController.java', sub: 'package controller', suffix: 'terminar + Javadoc + prueba' },
@@ -49,6 +52,14 @@ export class Semana3Component {
     { name: 'RegistrarUsuarioController.java', sub: 'package controller', suffix: 'terminar + Javadoc + prueba' },
     { name: 'UsuarioController.java', sub: 'package controller', suffix: 'terminar + Javadoc + prueba' },
     { name: 'VentaController.java', sub: 'package controller', suffix: 'terminar + Javadoc + prueba' },
+  ];
+
+  /** Vistas FXML/CSS de Semana 3 (el documento solo nombra LibroView.fxml;
+   *  el resto son "todos los archivos existentes en view/fxml y view/style"). */
+  protected readonly viewItems: PackageItem[] = [
+    { name: 'LibroView.fxml', sub: 'package view/fxml', suffix: 'SceneBuilder + vincular con LibroController' },
+    { name: 'Vistas FXML restantes', sub: 'package view/fxml', suffix: 'todas las existentes, relacionadas con sus controllers' },
+    { name: 'Hojas de estilo CSS', sub: 'package view/style', suffix: 'estilos de las vistas' },
   ];
 
   protected readonly gitSteps: GitStep[] = [

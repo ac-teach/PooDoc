@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 interface Segment {
   t?: string;
@@ -31,6 +31,9 @@ function step(label: string, ...segments: Segment[]): GitStep {
   styleUrl: './semana-1.component.scss',
 })
 export class Semana1Component {
+  /** Collapsible toggle para la sección "¿Cuántos de cada qué? (Cantidades)". */
+  protected readonly showCantidades = signal(true);
+
   protected readonly items: PackageItem[] = [
     { name: 'Principal.java', sub: 'package model / system / util', suffix: 'terminar + Javadoc + prueba' },
     { name: 'Autor.java', sub: 'package model / system / util', suffix: 'terminar + Javadoc + prueba' },

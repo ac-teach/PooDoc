@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 interface Segment {
   t?: string;
@@ -95,6 +95,9 @@ const CONTROLLER_NAMES = [
   styleUrl: './semana-4.component.scss',
 })
 export class Semana4Component {
+  /** Collapsible toggle para la sección "¿Cuántos de cada qué? (Cantidades)". */
+  protected readonly showCantidades = signal(true);
+
   protected readonly items: PackageItem[] = [
     ...MODEL_NAMES,
     ...DAO_NAMES,
